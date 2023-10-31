@@ -1,6 +1,6 @@
 Package: psychCNVassoc
 Type: Package
-Title: 
+Title: temporary title
 Version: 0.1.0
 Authors@R: person("Angela", "Uzelac", 
                   email = "angela.uzelac@mail.utoronto.ca", 
