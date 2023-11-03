@@ -1,13 +1,14 @@
 #' testing
 
-getCNVgenes(CNV_call, chromosome_number = NULL, reference_genome){
+
+getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   # validation here
 
   # cnv_data <- readr::read_tsv(CNVfileName, col_names = FALSE)
   # colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
   # cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
   # ^put this in tests, function should actually take dataframe
-  if(ncols(CNV_call) != 4){
+  if(ncol(CNV_call) != 4){
     stop("The dataframe must have 4 columns.")
   }
   if(!all(CNV_call$chromosome_name %in% c(1:22, "X", "Y"))){
@@ -31,7 +32,7 @@ getCNVgenes(CNV_call, chromosome_number = NULL, reference_genome){
   }
   if(missing(reference_genome)){
     reference_genome <- "GRCh38"
-    warning("Reference genome was not specified. GRCh38 will be used.")
+    warning("Reference genome was not specified. GRCh38 was used.")
   }
 
 
@@ -64,5 +65,7 @@ getCNVgenes(CNV_call, chromosome_number = NULL, reference_genome){
   genes_in_cnv <- dplyr::filter(joined_data, start_position.x >= start_position.y, end_position.x <= end_position.y)
 
   gene_list <- unique(genes_in_cnv$hgnc_symbol)
+
+  return(gene_list)
 
 }
