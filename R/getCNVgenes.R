@@ -8,6 +8,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   # colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
   # cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
   # ^put this in tests, function should actually take dataframe
+  if(!is.data.frame(CNV_call)){
+    stop("First argument passed into function getCNVgenes() must be a dataframe.")
+  }
   if(ncol(CNV_call) != 4){
     stop("The dataframe must have 4 columns.")
   }
