@@ -27,9 +27,8 @@ A paragraph that describes the purpose of your R package and biological data bei
 
 <br>
 <br>
-<br>
 To install the latest version of the package:
-```{r}
+```{r, eval = FALSE}
 install.packages("devtools")
 library("devtools")
 devtools::install_github("angelauzelac10/psychCNVassoc", build_vignettes = TRUE)
@@ -47,7 +46,7 @@ Provide the following commands, customized to your R package. Then provide a lis
 <br>
 <br>
 
-```{r}
+```{r, eval = FALSE}
 ls("package:psychCNVassoc")
 data(package = "psychCNVassoc") 
 browseVignettes("psychCNVassoc")
@@ -65,10 +64,9 @@ browseVignettes("psychCNVassoc")
 
 5.  ***plotDiseaseCloud*** for plotting information criteria values as a scatter plot. 
 
-The package also contains two RNA sequencing datasets, called GeneCounts and GeneCounts2. Refer to package vignettes for more details. An overview of the package is illustrated below. 
+The package also contains dataset... Refer to package vignettes for more details. An overview of the package is illustrated below. 
 
 ![](./inst/extdata/example.png)
-
 
 ## Contributions
 
@@ -80,9 +78,6 @@ Provide a paragraph clearly indicating the name of the author of the package and
 The author of the package is Angela Uzelac. 
 
 ## References
-
-<br>
-<br>
 
 - Akaike, H. (1973). Information theory and an extension of the maximum likelihood principle. In *Second International Symposium on Information Theory*, New York, USA, 267–281. Springer Verlag. https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15.
 
@@ -105,7 +100,5 @@ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5096736/
 
 ## Acknowledgements
 
-<br>
-<br>
-<br>
 This package was developed as part of an assessment for 2019-2023 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `psychCNVassoc` welcomes issues, enhancement requests, and other contributions. To submit an issue, use the [GitHub issues](https://github.com/angelauzelac10/psychCNVassoc/issues).
+

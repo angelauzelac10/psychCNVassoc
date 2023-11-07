@@ -2,10 +2,79 @@
 % Please edit documentation in R/getCNVgenes.R
 \name{getCNVgenes}
 \alias{getCNVgenes}
-\title{testing}
+\title{Get genes contained within CNVs}
 \usage{
 getCNVgenes(CNV_call, chromosome_number = NULL, reference_genome)
 }
+\arguments{
+\item{CNV_call}{A dataframe of CNVs containing 4 columns: the chromosome number
+on which it is found, the start position, the end position, and
+the type (either DUP or DEL).}
+
+\item{chromosome_number}{A positive integer indicating the chromosome number
+on which to identify genes contained within the CNVs.}
+
+\item{reference_genome}{A string value, either 'GRCh37' or 'GRCh38', indicating
+the genome to compare. Default is 'GRCh38'.}
+}
+\value{
+Returns a character vector of genes that are contained within
+the input list of CNVs.
+}
 \description{
-testing
+A function that calculates information criteria given log-likelihood,
+number of clusters, dimension of dataset, and number of observations,
+and the probability
+}
+\details{
+A function that produces a list of genes that are contained within Copy Number
+Variants(CNVs) from the provided table of CNVs containing the chromosome number,
+start position, end position, and type (duplication or deletion). User can also
+specify the chromosome number for which they want results, and the reference
+genome they want to use to find genes within the CNVs. Optionally, the function
+outputs a graph showing the distribution of genic vs. non-genic CNVs.
+}
+\examples{
+# Example 1
+# Using example_CNV_call dataset available with package
+cnv_data <- example_CNV_call
+colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
+cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
+
+# Get list of genes
+gene_list <- getCNVgenes(CNV_call = cnv_data)
+
+
+\dontrun{
+# Example 2
+# Obtain an external sample RNAseq dataset
+# Need to download package using install.packages("MBCluster.Seq")
+library(MBCluster.Seq)
+data("Count")
+dim(Count)
+
+# Calculate information criteria value
+InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
+                                             nClusters = 2,
+                                             dimensionality = ncol(Count),
+                                             observations = nrow(Count),
+                                             probability = c(0.5, 0.5))
+InfCriteriaResults$BICresults
+}
+}
+\references{
+Akaike, H. (1973). Information theory and an extension of the maximum
+likelihood principle. In \emph{Second International Symposium on Information
+Theory}, New York, NY, USA, pp. 267–281. Springer Verlag. \href{https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15}{Link}
+
+Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for
+clustering with the integrated classification likelihood. \emph{IEEE Transactions on Pattern
+Analysis and Machine Intelligence} 22. \href{https://hal.inria.fr/inria-00073163/document}{Link}
+
+Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics} 6, 461–464.
+\href{https://projecteuclid.org/euclid.aos/1176344136}{Link}.
+
+Yaqing, S. (2012). MBCluster.Seq: Model-Based Clustering for RNA-seq
+Data. R package version 1.0.
+\href{https://CRAN.R-project.org/package=MBCluster.Seq}{Link}.
 }

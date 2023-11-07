@@ -16,80 +16,12 @@ package was developed using `R version 4.3.1 (2023-06-16 ucrt)`,
 
 ## Installation
 
-<br> <br> <br> To install the latest version of the package:
+<br> <br> To install the latest version of the package:
 
 ``` r
 install.packages("devtools")
-#> Installing package into 'C:/Users/angel/AppData/Local/Temp/RtmponTI3A/temp_libpathf88290a4026'
-#> (as 'lib' is unspecified)
-#> package 'devtools' successfully unpacked and MD5 sums checked
-#> 
-#> The downloaded binary packages are in
-#>  C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\downloaded_packages
 library("devtools")
-#> Warning: package 'devtools' was built under R version 4.3.2
-#> Loading required package: usethis
 devtools::install_github("angelauzelac10/psychCNVassoc", build_vignettes = TRUE)
-#> Downloading GitHub repo angelauzelac10/psychCNVassoc@HEAD
-#> ggplot2   (3.4.4   -> 567006c73...) [GitHub]
-#> lifecycle (1.0.3   -> 1.0.4       ) [CRAN]
-#> withr     (2.5.1   -> 2.5.2       ) [CRAN]
-#> rlang     (1.1.1   -> 1.1.2       ) [CRAN]
-#> htmltools (0.5.6.1 -> 0.5.7       ) [CRAN]
-#> httpuv    (1.6.11  -> 1.6.12      ) [CRAN]
-#> xfun      (0.40    -> 0.41        ) [CRAN]
-#> evaluate  (0.22    -> 0.23        ) [CRAN]
-#> utf8      (1.2.3   -> 1.2.4       ) [CRAN]
-#> limma     (3.58.0  -> 3.58.1      ) [CRAN]
-#> Installing 9 packages: lifecycle, withr, rlang, htmltools, httpuv, xfun, evaluate, utf8, limma
-#> Installing packages into 'C:/Users/angel/AppData/Local/Temp/RtmponTI3A/temp_libpathf88290a4026'
-#> (as 'lib' is unspecified)
-#> 
-#>   There is a binary version available but the source version is later:
-#>           binary source needs_compilation
-#> lifecycle  1.0.3  1.0.4             FALSE
-#> 
-#> package 'withr' successfully unpacked and MD5 sums checked
-#> package 'rlang' successfully unpacked and MD5 sums checked
-#> package 'htmltools' successfully unpacked and MD5 sums checked
-#> package 'httpuv' successfully unpacked and MD5 sums checked
-#> package 'xfun' successfully unpacked and MD5 sums checked
-#> package 'evaluate' successfully unpacked and MD5 sums checked
-#> package 'utf8' successfully unpacked and MD5 sums checked
-#> package 'limma' successfully unpacked and MD5 sums checked
-#> 
-#> The downloaded binary packages are in
-#>  C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\downloaded_packages
-#> installing the source package 'lifecycle'
-#> Downloading GitHub repo hadley/ggplot2@HEAD
-#> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\remotes637c328b751c\tidyverse-ggplot2-567006c/DESCRIPTION' ...     checking for file 'C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\remotes637c328b751c\tidyverse-ggplot2-567006c/DESCRIPTION' ...   ✔  checking for file 'C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\remotes637c328b751c\tidyverse-ggplot2-567006c/DESCRIPTION' (441ms)
-#>       ─  preparing 'ggplot2': (16.7s)
-#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
-#>       ─  installing the package to build vignettes (1.3s)
-#>          creating vignettes ...     creating vignettes ...   ✔  creating vignettes (1m 26.7s)
-#>       ─  checking for LF line-endings in source and make files and shell scripts (787ms)
-#>       ─  checking for empty or unneeded directories
-#>       ─  building 'ggplot2_3.4.4.9000.tar.gz'
-#>      
-#> 
-#> Installing package into 'C:/Users/angel/AppData/Local/Temp/RtmponTI3A/temp_libpathf88290a4026'
-#> (as 'lib' is unspecified)
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\remotes637c1a255e59\angelauzelac10-psychCNVassoc-138544d/DESCRIPTION' ...     checking for file 'C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\remotes637c1a255e59\angelauzelac10-psychCNVassoc-138544d/DESCRIPTION' ...   ✔  checking for file 'C:\Users\angel\AppData\Local\Temp\RtmpgT6rB0\remotes637c1a255e59\angelauzelac10-psychCNVassoc-138544d/DESCRIPTION' (920ms)
-#>       ─  preparing 'psychCNVassoc':
-#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
-#>       ─  checking for LF line-endings in source and make files and shell scripts
-#>       ─  checking for empty or unneeded directories
-#>       ─  building 'psychCNVassoc_0.1.0.tar.gz'
-#>      
-#> 
-#> Installing package into 'C:/Users/angel/AppData/Local/Temp/RtmponTI3A/temp_libpathf88290a4026'
-#> (as 'lib' is unspecified)
-#> Warning in i.p(...): installation of package
-#> 'C:/Users/angel/AppData/Local/Temp/RtmpgT6rB0/file637c42e433c1/psychCNVassoc_0.1.0.tar.gz'
-#> had non-zero exit status
 library("psychCNVassoc")
 ```
 
@@ -106,10 +38,8 @@ to vignettes for a tutorial of your package. E.g., <br> <br> <br>
 
 ``` r
 ls("package:psychCNVassoc")
-#> [1] "example_CNV_call"
 data(package = "psychCNVassoc") 
 browseVignettes("psychCNVassoc")
-#> No vignettes found by browseVignettes("psychCNVassoc")
 ```
 
 `psychCNVassoc` contains 3 functions.
@@ -129,9 +59,8 @@ browseVignettes("psychCNVassoc")
 5.  ***plotDiseaseCloud*** for plotting information criteria values as a
     scatter plot.
 
-The package also contains two RNA sequencing datasets, called GeneCounts
-and GeneCounts2. Refer to package vignettes for more details. An
-overview of the package is illustrated below.
+The package also contains dataset… Refer to package vignettes for more
+details. An overview of the package is illustrated below.
 
 ![](./inst/extdata/example.png)
 
@@ -148,8 +77,6 @@ individual contributions to the package are important. E.g., <br> <br>
 The author of the package is Angela Uzelac.
 
 ## References
-
-<br> <br>
 
 - Akaike, H. (1973). Information theory and an extension of the maximum
   likelihood principle. In *Second International Symposium on
@@ -187,8 +114,8 @@ The author of the package is Angela Uzelac.
 
 ## Acknowledgements
 
-<br> <br> <br> This package was developed as part of an assessment for
-2019-2023 BCB410H: Applied Bioinformatics course at the University of
-Toronto, Toronto, CANADA. `psychCNVassoc` welcomes issues, enhancement
-requests, and other contributions. To submit an issue, use the [GitHub
+This package was developed as part of an assessment for 2019-2023
+BCB410H: Applied Bioinformatics course at the University of Toronto,
+Toronto, CANADA. `psychCNVassoc` welcomes issues, enhancement requests,
+and other contributions. To submit an issue, use the [GitHub
 issues](https://github.com/angelauzelac10/psychCNVassoc/issues).
