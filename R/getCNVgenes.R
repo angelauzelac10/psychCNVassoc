@@ -11,8 +11,11 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   if(!is.data.frame(CNV_call)){
     stop("First argument passed into function getCNVgenes() must be a dataframe.")
   }
+  if(nrow(CNV_call) < 1){
+    stop("There are no rows in the input CNV call dataframe.")
+  }
   if(ncol(CNV_call) != 4){
-    stop("The dataframe must have 4 columns.")
+    stop("The CNV call dataframe must have 4 columns.")
   }
   if(!all(CNV_call$chromosome_name %in% c(1:22, "X", "Y"))){
     stop("Chromosome number must be 1-22, X, or Y.")
@@ -28,7 +31,7 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   }
 
   if(!is.null(chromosome_number)){
-    cnv_data <- cnv_data[cnv_data$chromosome_name == chromosome_number, ]
+    CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
   }
   if(!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh37"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
@@ -37,6 +40,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
     reference_genome <- "GRCh38"
     warning("Reference genome was not specified. GRCh38 was used.")
   }
+
+  CNV_call$ID <- 1:nrow(CNV_call)
+  count_CNV <- nrow(CNV_call)
 
 
   if(reference_genome == "GRCh37"){
@@ -62,12 +68,27 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   }
 
   # Inner join the data frames
-  joined_data <- dplyr::inner_join(all_genes, cnv_data, by = "chromosome_name", relationship = "many-to-many")
+  joined_data <- dplyr::inner_join(all_genes, CNV_call, by = "chromosome_name", relationship = "many-to-many")
 
   # Filter genes contained within CNVs
   genes_in_cnv <- dplyr::filter(joined_data, start_position.x >= start_position.y, end_position.x <= end_position.y)
 
+  count_genic_CNV <- length(unique(genes_in_cnv$ID))
   gene_list <- unique(genes_in_cnv$hgnc_symbol)
+
+  valid_input <- FALSE
+  while(!valid_input){
+    user_input <- readline("Would you like to see the distribution of genic and non-genic CNVs [Y/N]: ")
+    if(user_input == "Y" || user_input == "y" || user_input == "N" || user_input == "n"){
+      valid_input <- TRUE
+    }else{
+      cat("Invalid input. Please enter 'Y' or 'N'.\n")
+    }
+  }
+
+  if(user_input == "Y" || user_input == "y"){
+    plotCNVgeneImpact(count_genic_CNV, count_CNV)
+  }
 
   return(gene_list)
 
