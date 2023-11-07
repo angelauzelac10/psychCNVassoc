@@ -31,4 +31,4 @@ Suggests:
     RTCGA.rnaseq
 VignetteBuilder: knitr
 URL: https://github.com/angelauzelac10/psychCNVassoc
-BugReports: https://github.com/anjalisilva/TestingPackage/issues
+BugReports: https://github.com/angelauzelac10/psychCNVassoc/issues
