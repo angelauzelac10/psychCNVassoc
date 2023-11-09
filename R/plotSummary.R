@@ -12,7 +12,7 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
   if(ncol(CNV_call) != 4){
     stop("The CNV call dataframe must have 4 columns.")
   }
-  if(colnames(CNV_call) != c("chromosome_name", "start_position", "end_position", "type")){
+  if(!all(colnames(CNV_call) %in% c("chromosome_name", "start_position", "end_position", "type"))){
     stop("The CNV call dataframe must have columns named chromosome_name, start_position, end_position, and type in that order.")
   }
   if(!all(CNV_call$chromosome_name %in% c(1:22, "X", "Y"))){
