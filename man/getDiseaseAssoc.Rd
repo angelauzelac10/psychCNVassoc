@@ -2,10 +2,64 @@
 % Please edit documentation in R/getDiseaseAssoc.R
 \name{getDiseaseAssoc}
 \alias{getDiseaseAssoc}
-\title{testing getDiseaseAssoc}
+\title{Get Psychiatric diseases associated with CNVs}
 \usage{
 getDiseaseAssoc(gene_list)
 }
+\arguments{
+\item{gene_list}{A character vector containing gene HGNC symbols.}
+}
+\value{
+Returns a data frame containing genes and their known association
+with psychiatric diseases.
+}
 \description{
-testing getDiseaseAssoc
+A function that retrieves gene-disease associations from the PsyGeNet database,
+based on a provided list of genes (HGNC symbols).
+}
+\examples{
+# Example 1
+# Using example_CNV_call dataset available with package
+cnv_data <- example_CNV_call
+colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
+cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
+
+# Get list of genes
+gene_list <- getCNVgenes(CNV_call = cnv_data)
+
+# Get gene-disease association
+gene_disease_assoc <- getDiseaseAssoc(gene_list)
+
+\dontrun{
+# Example 2
+# Obtain an external sample RNAseq dataset
+# Need to download package using install.packages("MBCluster.Seq")
+library(MBCluster.Seq)
+data("Count")
+dim(Count)
+
+# Calculate information criteria value
+InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
+                                             nClusters = 2,
+                                             dimensionality = ncol(Count),
+                                             observations = nrow(Count),
+                                             probability = c(0.5, 0.5))
+InfCriteriaResults$BICresults
+}
+}
+\references{
+Akaike, H. (1973). Information theory and an extension of the maximum
+likelihood principle. In \emph{Second International Symposium on Information
+Theory}, New York, NY, USA, pp. 267–281. Springer Verlag. \href{https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15}{Link}
+
+Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for
+clustering with the integrated classification likelihood. \emph{IEEE Transactions on Pattern
+Analysis and Machine Intelligence} 22. \href{https://hal.inria.fr/inria-00073163/document}{Link}
+
+Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics} 6, 461–464.
+\href{https://projecteuclid.org/euclid.aos/1176344136}{Link}.
+
+Yaqing, S. (2012). MBCluster.Seq: Model-Based Clustering for RNA-seq
+Data. R package version 1.0.
+\href{https://CRAN.R-project.org/package=MBCluster.Seq}{Link}.
 }
