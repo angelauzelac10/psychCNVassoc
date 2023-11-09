@@ -70,7 +70,7 @@
 #' @importFrom biomaRt getBM
 #' @import dplyr
 
-getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
+getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "GRCh38", show_piechart = FALSE){
 
   if(!is.data.frame(CNV_call)){
     stop("First argument passed into function getCNVgenes() must be a dataframe.")
@@ -80,6 +80,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   }
   if(ncol(CNV_call) != 4){
     stop("The CNV call dataframe must have 4 columns.")
+  }
+  if(colnames(CNV_call) != c("chromosome_name", "start_position", "end_position", "type")){
+    stop("The CNV call dataframe must have columns named chromosome_name, start_position, end_position, and type in that order.")
   }
   if(!all(CNV_call$chromosome_name %in% c(1:22, "X", "Y"))){
     stop("Chromosome number must be 1-22, X, or Y.")
@@ -97,11 +100,10 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   if(!is.null(chromosome_number)){
     CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
   }
-  if(!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh37"))){
+  if(!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
   }
   if(missing(reference_genome)){
-    reference_genome <- "GRCh38"
     warning("Reference genome was not specified. GRCh38 was used.")
   }
 
@@ -140,17 +142,7 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome){
   count_genic_CNV <- length(unique(genes_in_cnv$ID))
   gene_list <- unique(genes_in_cnv$hgnc_symbol)
 
-  valid_input <- FALSE
-  while(!valid_input){
-    user_input <- readline("Would you like to see the distribution of genic and non-genic CNVs [Y/N]: ")
-    if(user_input == "Y" || user_input == "y" || user_input == "N" || user_input == "n"){
-      valid_input <- TRUE
-    }else{
-      cat("Invalid input. Please enter 'Y' or 'N'.\n")
-    }
-  }
-
-  if(user_input == "Y" || user_input == "y"){
+  if(show_piechart == TRUE){
     plotCNVgeneImpact(count_genic_CNV, count_CNV)
   }
 
