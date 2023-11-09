@@ -1,13 +1,57 @@
-#' testing
+#' Plot Number genic vs. non-genic CNVs
+#'
+#' Given the number of CNVs that contain 1 or more genes and the total number of CNVs
+#' from the input table, plot a piechart demonstrating the distribution of CNVs that
+#' contain 1 or more genes vs. CNVs that contain no genes. This function is called
+#' from within getCNVgenes().
+#'
+#'
+#' @param genic_CNV_count A positive integer indicating the number of CNVs
+#'                        that contain 1 or more genes.
+#' @param total_CNV_count A positive integer indicating the total number of
+#'                        unique CNVs from the input table.
+#'
+#' @return Returns a piechart showing the number of CNVs that
+#'          contain 1 or more genes vs. CNVs that contain no genes.
+#'
+#' @examples
+#' # Example 1
+#' # Using example_CNV_call dataset available with package
+#' cnv_data <- example_CNV_call
+#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
+#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
+#'
+#' # Get list of genes
+#' gene_list <- getCNVgenes(CNV_call = cnv_data, show_piechart = TRUE)
+#'
+#'
+#' \dontrun{
+#' # Example 2
+#' # Obtain an external sample RNAseq dataset
+#' # Need to download package using install.packages("MBCluster.Seq")
+#' library(MBCluster.Seq)
+#' data("Count")
+#' dim(Count)
+#'
+#' # Calculate information criteria value
+#' InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
+#'                                              nClusters = 2,
+#'                                              dimensionality = ncol(Count),
+#'                                              observations = nrow(Count),
+#'                                              probability = c(0.5, 0.5))
+#' InfCriteriaResults$BICresults
+#'}
+#'
+#' @export
 
 
 plotCNVgeneImpact <- function(genic_CNV_count, total_CNV_count){
 
   if(genic_CNV_count < 1){
-    stop("There are no CNVs that contain genes.")
+    stop("Could not produce piechart. There are no CNVs that contain genes.")
   }
   if(genic_CNV_count > total_CNV_count){
-    stop("There cannot be more CNVs that contain genes than there are CNVs in total.")
+    stop("Could not produce piechart. There cannot be more CNVs that contain genes than there are CNVs in total.")
   }
 
   nongenic_CNV_count <- total_CNV_count - genic_CNV_count

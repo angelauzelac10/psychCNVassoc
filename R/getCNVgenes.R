@@ -1,9 +1,5 @@
 #' Get genes contained within CNVs
 #'
-#' A function that calculates information criteria given log-likelihood,
-#' number of clusters, dimension of dataset, and number of observations,
-#' and the probability
-#'
 #' A function that produces a list of genes that are contained within Copy Number
 #' Variants(CNVs) from the provided table of CNVs containing the chromosome number,
 #' start position, end position, and type (duplication or deletion). User can also
@@ -18,6 +14,8 @@
 #'                          on which to identify genes contained within the CNVs.
 #' @param reference_genome A string value, either 'GRCh37' or 'GRCh38', indicating
 #'                          the genome to compare. Default is 'GRCh38'.
+#' @param show_piechart A boolean value indicating whether to show the distribution
+#'                      of genic vs. non-genic CNVs.
 #'
 #' @return Returns a character vector of genes that are contained within
 #'          the input list of CNVs.
