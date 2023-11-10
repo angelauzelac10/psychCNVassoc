@@ -10,8 +10,9 @@
 #' @param CNV_call A dataframe of CNVs containing 4 columns: the chromosome number
 #'                on which it is found, the start position, the end position, and
 #'                the type (either DUP or DEL).
-#' @param chromosome_number A positive integer indicating the chromosome number
+#' @param chromosome_number A string value indicating the chromosome name
 #'                          on which to identify genes contained within the CNVs.
+#'                          Can be 1-22, 'X', or 'Y'.
 #' @param reference_genome A string value, either 'GRCh37' or 'GRCh38', indicating
 #'                          the genome to compare. Default is 'GRCh38'.
 #' @param show_piechart A boolean value indicating whether to show the distribution
@@ -29,6 +30,31 @@
 #'
 #' # Get list of genes
 #' gene_list <- getCNVgenes(CNV_call = cnv_data)
+#'
+#' # Example 2
+#' # Causes an error
+#' cnv_data_unmodified <- example_CNV_call
+#'
+#' gene_list2 <- getCNVgenes(CNV_call = cnv_data_unmodified)
+#'
+#'
+#' # Example 3
+#' # Produces piechart plot
+#' cnv_data <- example_CNV_call
+#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
+#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
+#'
+#' # Get list of genes and piechart graphical output
+#' gene_list3 <- getCNVgenes(CNV_call = cnv_data, show_piechart = TRUE)
+#'
+#' # Example 4
+#' # Specifying chromosome number and reference genome
+#' cnv_data <- example_CNV_call
+#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
+#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
+#'
+#' # Get list of genes for chromosome 22 using the GRCh37 reference genome
+#' gene_list4 <- getCNVgenes(CNV_call = cnv_data, chromosome_number = "22", reference_genome = "GRCh37")
 #'
 #'
 #' \dontrun{

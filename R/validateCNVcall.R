@@ -1,43 +1,9 @@
-#' Validate the input CNV call data frame
-#'
-#' A function that terminates execution and produces an error message when the
-#' user enters a CNV call that does not meet format requirements.
-#'
-#'
-#' @param CNV_call A data frame of CNVs containing 4 columns: the chromosome number
-#'                on which it is found, the start position, the end position, and
-#'                the type (either DUP or DEL).
-#'
-#' @return Returns an error message if the input parameter does not meet requirements.
-#'
-#' @examples
-#' # Example 1
-#' # Using example_CNV_call dataset available with package
-#' # Without modifying the CNV call will produce an error
-#' cnv_data <- example_CNV_call
-#'
-#' # Get list of genes
-#' gene_list <- getCNVgenes(CNV_call = cnv_data)
-#'
-#'
-#' \dontrun{
-#' # Example 2
-#' # Obtain an external sample RNAseq dataset
-#' # Need to download package using install.packages("MBCluster.Seq")
-#' library(MBCluster.Seq)
-#' data("Count")
-#' dim(Count)
-#'
-#' # Calculate information criteria value
-#' InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
-#'                                              nClusters = 2,
-#'                                              dimensionality = ncol(Count),
-#'                                              observations = nrow(Count),
-#'                                              probability = c(0.5, 0.5))
-#' InfCriteriaResults$BICresults
-#'}
-#'
-#' @export
+# Validate the input CNV call data frame
+#
+# A function that terminates execution and produces an error message when the
+# user enters a CNV call that does not meet format requirements.
+#
+# Function is called from getCNVgenes() and plotCNVsize().
 
 
 validateCNVcall <- function(CNV_call){

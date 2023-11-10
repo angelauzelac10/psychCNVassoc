@@ -2,10 +2,8 @@
 
 export(getCNVgenes)
 export(getDiseaseAssoc)
-export(plotCNVgeneImpact)
 export(plotCNVsize)
 export(plotDiseaseCloud)
-export(validateCNVcall)
 import(dplyr)
 import(ggplot2)
 import(psygenet2r)
