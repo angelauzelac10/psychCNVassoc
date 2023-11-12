@@ -83,7 +83,7 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
                    position = "stack") +
     theme_bw() +
     ggtitle(hist_title) +
-    xlab("Log-Size of CNV") +
+    xlab("Size of CNV (log scale)") +
     ylab("Number of CNVs") +
     scale_fill_manual(name = NULL,
                       values = c('del' = "paleturquoise3",'dup' = "plum3"),
