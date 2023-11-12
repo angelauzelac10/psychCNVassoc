@@ -16,9 +16,8 @@ knitr::opts_chunk$set(
 
 ## Description
 
-
 <br>
-`psychCNVassoc` is an R package designed to ... The `psychCNVassoc` package was developed using `R version 4.3.1 (2023-06-16 ucrt)`, `Platform: x86_64-w64-mingw32/x64 (64-bit)` and `Running under: Windows 10 x64 (build 19045)`.
+`psychCNVassoc` is an R package developed to streamline preliminary exploratory analysis in psychiatric genetics. It takes Copy Number Variant (CNV) data as input, identifies genes encompassed by these CNVs, and associates them with psychiatric disorders from the PsyGeNet database. While existing packages annotate CNVs with clinical pathogenicity, evaluate gene dosage sensitivity, and associate pathogenic CNVs with a broad range of quantitative phenotypes, psychCNVassoc stands out by focusing exclusively on the association of CNVs with psychiatric disorders. The package complements existing workflows by determining whether CNVs warrant further investigation into the molecular mechanisms underlying their association with psychiatric disease comorbidities. This package accepts inputs in the format of CNV calls, which includes the chromosome number, start and end position, type of variation (deletion or duplication), which can be obtained using existing CNV detection tools like PennCNV. Additionally, it can accept a pre-defined list of genes as HGNC symbols (e.g. ‘COMT’, ‘DRD3’, 'HTR1A') for associating genes to diseases. The `psychCNVassoc` package was developed using `R version 4.3.1 (2023-06-16 ucrt)`, `Platform: x86_64-w64-mingw32/x64 (64-bit)` and `Running under: Windows 10 x64 (build 19045)`.
 
 
 ## Installation
