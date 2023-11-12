@@ -1,6 +1,6 @@
 Package: psychCNVassoc
 Type: Package
-Title: temporary title
+Title: Determine Association Between Copy Number Variants and Psychiatric Disorders
 Version: 0.1.0
 Authors@R: person("Angela", "Uzelac", 
                   email = "angela.uzelac@mail.utoronto.ca", 
