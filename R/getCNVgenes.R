@@ -96,10 +96,12 @@
 
 getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "GRCh38", show_piechart = FALSE){
 
+  # validate input CNV data
   validateCNVcall(CNV_call)
 
-  if(!is.null(chromosome_number)){
-    CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
+  # validate chromosome number and reference genome
+  if(!is.null(chromosome_number) & !(chromosome_number %in% c(1:22, "X", "Y"))){
+    stop("Specified chromosome number must be 1-22, X, or Y.")
   }
   if(!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
@@ -108,41 +110,51 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
     warning("Reference genome was not specified. GRCh38 was used.")
   }
 
+  # filter by specified chromosome
+  if(!is.null(chromosome_number)){
+    CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
+  }
+
+  # assign unique ID to each CNV record
   CNV_call$ID <- 1:nrow(CNV_call)
+  # get count of CNVs, for piechart graphic
   count_CNV <- nrow(CNV_call)
 
-
+  # connect to dataset GRCh37 or GRCh38
   if(reference_genome == "GRCh37"){
     ensembl <- biomaRt::useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl", GRCh = 37)
   } else{
     ensembl <- biomaRt::useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl")
   }
 
-
+  # get all genes from biomaRt, including the chromosome they are on, and the
+  # start and end positions
   all_genes <- biomaRt::getBM(attributes=c('hgnc_symbol',
                                    'chromosome_name',
                                    'start_position',
                                    'end_position'), mart = ensembl)
+  # clean the data and remove alternate chromosome names
   all_genes <- all_genes[all_genes$hgnc_symbol != "", ]
   all_genes <- all_genes[all_genes$chromosome_name %in% c(1:22, "X", "Y"), ]
   #there are still duplicates of genes, think about why this may or may not be a problem
 
-  #filter this so that if out of the multiple entries for the same gene has one entry
-  #that has an actual chromosome number, use that number
-
+  # filter by chromosome number if specified
   if(!is.null(chromosome_number)){
     all_genes <- all_genes[all_genes$chromosome_name == chromosome_number, ]
   }
 
-  # Inner join the data frames
+  # Inner join the CNV data with the gene data by chromosome
   joined_data <- dplyr::inner_join(all_genes, CNV_call, by = "chromosome_name", relationship = "many-to-many")
 
   # Filter genes contained within CNVs
   genes_in_cnv <- dplyr::filter(joined_data, start_position.x >= start_position.y, end_position.x <= end_position.y)
 
-  count_genic_CNV <- length(unique(genes_in_cnv$ID))
+  # retrieve distinct genes contained within CNVs
   gene_list <- unique(genes_in_cnv$hgnc_symbol)
 
+  # count number of CNVs that contain genes, for piechart graphic
+  count_genic_CNV <- length(unique(genes_in_cnv$ID))
+  # if specified, display the piechart
   if(show_piechart == TRUE){
     plotCNVgeneImpact(count_genic_CNV, count_CNV)
   }
