@@ -66,8 +66,7 @@
 
 plotDiseaseCloud <- function(disease_assoc_tbl){
 
-  # validation here
-
+  # validate input table
   if(nrow(disease_assoc_tbl) < 1){
     stop("There are no rows in the input gene-disease association dataframe.")
   }
@@ -75,15 +74,15 @@ plotDiseaseCloud <- function(disease_assoc_tbl){
     stop("The input data frame must contain a column 'DiseaseName'.")
   }
 
-  corpus <- Corpus(VectorSource(disease_assoc_tbl$DiseaseName))
+  corpus <- tm::Corpus(VectorSource(disease_assoc_tbl$DiseaseName))
   suppressWarnings({
-    corpus <- tm_map(corpus, content_transformer(tolower))
-    corpus <- tm_map(corpus, removePunctuation)
-    corpus <- tm_map(corpus, removeNumbers)
-    corpus <- tm_map(corpus, removeWords, stopwords("english"))
-    corpus <- tm_map(corpus, stripWhitespace)
-    corpus <- tm_map(corpus, removeWords, c("disorder", "disorders", "related", "state", "use", "related", "major", "symptom", "symptoms"))
-    corpus <- tm_map(corpus,
+    corpus <- tm::tm_map(corpus, content_transformer(tolower))
+    corpus <- tm::tm_map(corpus, removePunctuation)
+    corpus <- tm::tm_map(corpus, removeNumbers)
+    corpus <- tm::tm_map(corpus, removeWords, stopwords("english"))
+    corpus <- tm::tm_map(corpus, stripWhitespace)
+    corpus <- tm::tm_map(corpus, removeWords, c("disorder", "disorders", "related", "state", "use", "related", "major", "symptom", "symptoms"))
+    corpus <- tm::tm_map(corpus,
                      replace_word <- function(x) {
                                         x <- gsub("abuse", "substance-abuse" , x)
                                         return(x)
@@ -91,11 +90,11 @@ plotDiseaseCloud <- function(disease_assoc_tbl){
                      )
   })
 
-  tdm <- TermDocumentMatrix(corpus)
+  tdm <- tm::TermDocumentMatrix(corpus)
   word_freq <- rowSums(as.matrix(tdm))
   word_freq_df <- data.frame(word = names(word_freq), freq = word_freq)
 
-  wordcloud2(word_freq_df)
+  wordcloud2::wordcloud2(word_freq_df)
   # when I make it smaller schizophrenia appears
   # need to figure out how to normalize these results
 
