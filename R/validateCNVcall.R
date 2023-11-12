@@ -21,7 +21,7 @@ validateCNVcall <- function(CNV_call){
     stop("The CNV call dataframe must have columns named chromosome_name, start_position, end_position, and type in that order.")
   }
   if(!all(CNV_call$chromosome_name %in% c(1:22, "X", "Y"))){
-    stop("Chromosome number must be 1-22, X, or Y.")
+    stop("All chromosome numbers in the CNV call must be 1-22, X, or Y.")
   }
   if(!all(is.numeric(CNV_call$start_position)) | !all(is.numeric(CNV_call$end_position))){
     stop("Start and end position must be integer values.")
