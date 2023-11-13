@@ -1,14 +1,15 @@
 #' Plot distribution of CNV sizes
 #'
 #' Given a CNV call data frame, plot the distribution of CNV sizes (# base pairs),
-#' demonstrating the number of deletions (DEL) vs. number of duplications (DUP).
+#' separated by the number of deletions (DEL) vs. number of duplications (DUP).
 #' Optionally, plots the size distribution for a specified chromosome.
 #'
 #' @param CNV_call A dataframe of CNVs containing 4 columns: the chromosome number
 #'                on which it is found, the start position, the end position, and
 #'                the type (either DUP or DEL).
-#' @param chromosome_number A positive integer indicating the chromosome number
+#' @param chromosome_number A string value indicating the chromosome name
 #'                          for which to plot CNV size distribution.
+#'                          Can be 1-22, 'X', or 'Y'.
 #'
 #' @return Returns a histogram of the CNV size distribution, separated by DEL and DUP.
 #'
@@ -21,6 +22,11 @@
 #'
 #' # Plot distribution of CNV sizes
 #' plotCNVsize(CNV_call = cnv_data)
+#'
+#' # Example 2
+#' # Produces error
+#' cnv_data_unmodified <- example_CNV_call
+#' plotCNVsize(CNV_call = cnv_data_unmodified)
 #'
 #'
 #' \dontrun{
@@ -64,7 +70,7 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
   validateCNVcall(CNV_call)
 
   # validate chromosome number
-  if(!is.null(chromosome_number) & !(chromosome_number %in% c(1:22, "X", "Y"))){
+  if(!is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotDiseaseCloud.R
 \name{plotDiseaseCloud}
 \alias{plotDiseaseCloud}
-\title{Produce a wordcloud of most common diseases}
+\title{Produce a wordcloud of the most common diseases}
 \usage{
 plotDiseaseCloud(disease_assoc_tbl)
 }
@@ -12,12 +12,12 @@ contain a column called DiseaseName.}
 }
 \value{
 Returns a wordcloud plot where the size of the word represents its
-frequency in gene-disease association results.
+frequency in a gene-disease association table.
 }
 \description{
 Given a data frame of gene-disease associations, produces a wordcloud showing the
-most frequent disease or disorder names associated with a previously provided
-list of genes. The size of the word represents its frequency in the gene-disease
+most frequent disease names associated with a list of genes found in Copy Number Variants (CNVs).
+The size of the word represents its frequency in the gene-disease
 association results.
 }
 \examples{

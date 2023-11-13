@@ -1,9 +1,9 @@
 #' Get Psychiatric diseases associated with CNVs
 #'
 #' A function that retrieves gene-disease associations from the PsyGeNet database,
-#' based on a provided list of genes (HGNC symbols).
+#' based on a provided list of genes (HGNC symbols) encompassed by Copy Number Variants (CNVs).
 #'
-#' @param gene_list A character vector containing gene HGNC symbols.
+#' @param gene_list A character vector containing genes as HGNC symbols (e.g. ‘COMT’, ‘DRD3’, ‘HTR1A’).
 #'
 #' @return Returns a data frame containing genes and their known association
 #'          with psychiatric diseases.
@@ -20,6 +20,11 @@
 #'
 #' # Get gene-disease association
 #' gene_disease_assoc <- getDiseaseAssoc(gene_list)
+#'
+#' # Example 2
+#' # Produces error
+#' gene_list_2 <- c(123, 234, 345)
+#' gene_disease_assoc <- getDiseaseAssoc(gene_list2)
 #'
 #' \dontrun{
 #' # Example 2

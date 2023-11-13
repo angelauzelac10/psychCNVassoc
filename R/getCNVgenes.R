@@ -23,56 +23,33 @@
 #'
 #' @examples
 #' # Example 1
-#' # Using example_CNV_call dataset available with package
-#' cnv_data <- example_CNV_call
-#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-#'
+#' # Using sample_CNV_call dataset available with package
 #' # Get list of genes
-#' gene_list <- getCNVgenes(CNV_call = cnv_data)
+#' gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 #'
 #' # Example 2
 #' # Causes an error
-#' cnv_data_unmodified <- example_CNV_call
+#' cnv_data_modified <- sample_CNV_call[, 1:3]
 #'
-#' gene_list2 <- getCNVgenes(CNV_call = cnv_data_unmodified)
+#' gene_list2 <- getCNVgenes(CNV_call = cnv_data_modified)
 #'
 #'
 #' # Example 3
 #' # Produces piechart plot
-#' cnv_data <- example_CNV_call
-#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-#'
-#' # Get list of genes and piechart graphical output
-#' gene_list3 <- getCNVgenes(CNV_call = cnv_data, show_piechart = TRUE)
+#' gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
 #'
 #' # Example 4
 #' # Specifying chromosome number and reference genome
-#' cnv_data <- example_CNV_call
-#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-#'
 #' # Get list of genes for chromosome 22 using the GRCh37 reference genome
-#' gene_list4 <- getCNVgenes(CNV_call = cnv_data, chromosome_number = "22", reference_genome = "GRCh37")
+#' gene_list4 <- getCNVgenes(CNV_call = sample_CNV_call, chromosome_number = "22", reference_genome = "GRCh37")
 #'
 #'
 #' \dontrun{
-#' # Example 2
-#' # Obtain an external sample RNAseq dataset
-#' # Need to download package using install.packages("MBCluster.Seq")
-#' library(MBCluster.Seq)
-#' data("Count")
-#' dim(Count)
-#'
-#' # Calculate information criteria value
-#' InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
-#'                                              nClusters = 2,
-#'                                              dimensionality = ncol(Count),
-#'                                              observations = nrow(Count),
-#'                                              probability = c(0.5, 0.5))
-#' InfCriteriaResults$BICresults
+#' # Example 5
+#' # Larger dataset, runs slower
+#' large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
 #'}
+#'
 #' @references
 #'Akaike, H. (1973). Information theory and an extension of the maximum
 #'likelihood principle. In \emph{Second International Symposium on Information
@@ -100,7 +77,7 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   validateCNVcall(CNV_call)
 
   # validate chromosome number and reference genome
-  if(!is.null(chromosome_number) & !(chromosome_number %in% c(1:22, "X", "Y"))){
+  if(!missing(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
   if(!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
@@ -136,7 +113,8 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   # clean the data and remove alternate chromosome names
   all_genes <- all_genes[all_genes$hgnc_symbol != "", ]
   all_genes <- all_genes[all_genes$chromosome_name %in% c(1:22, "X", "Y"), ]
-  #there are still duplicates of genes, think about why this may or may not be a problem
+  # free up space
+  rm(ensembl)
 
   # filter by chromosome number if specified
   if(!is.null(chromosome_number)){

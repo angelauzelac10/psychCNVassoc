@@ -8,13 +8,14 @@
 #'
 #' @format A data frame with columns:
 #' \describe{
-#'  \item {X1}{Chromosome name on which the CNV is found.}
-#'  \item {X2}{Start position (base) of the CNV.}
-#'  \item {X3}{End position (base) of the CNV.}
-#'  \item {X4}{Type of the CNV, either DUP (duplication) or DEL (deletion).}
+#'  \item{X1}{Chromosome name on which the CNV is found.}
+#'  \item{X2}{Start position (base) of the CNV.}
+#'  \item{X3}{End position (base) of the CNV.}
+#'  \item{X4}{Type of the CNV, either DUP (duplication) or DEL (deletion).}
 #' }
+#'
 #' @examples
 #' \dontrun{
-#'  example_CNV_call
+#'  sample_CNV_call
 #' }
-"example_CNV_call"
+"sample_CNV_call"

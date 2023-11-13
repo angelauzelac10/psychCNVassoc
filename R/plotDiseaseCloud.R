@@ -1,15 +1,15 @@
-#' Produce a wordcloud of most common diseases
+#' Produce a wordcloud of the most common diseases
 #'
 #' Given a data frame of gene-disease associations, produces a wordcloud showing the
-#' most frequent disease or disorder names associated with a previously provided
-#' list of genes. The size of the word represents its frequency in the gene-disease
+#' most frequent disease names associated with a list of genes found in Copy Number Variants (CNVs).
+#' The size of the word represents its frequency in the gene-disease
 #' association results.
 #'
 #' @param disease_assoc_tbl A data frame containing gene-disease associations. Must
 #'                          contain a column called DiseaseName.
 #'
 #' @return Returns a wordcloud plot where the size of the word represents its
-#'          frequency in gene-disease association results.
+#'          frequency in a gene-disease association table.
 #'
 #' @examples
 #' # Example 1

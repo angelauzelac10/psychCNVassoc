@@ -40,56 +40,33 @@ outputs a graph showing the distribution of genic vs. non-genic CNVs.
 }
 \examples{
 # Example 1
-# Using example_CNV_call dataset available with package
-cnv_data <- example_CNV_call
-colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-
+# Using sample_CNV_call dataset available with package
 # Get list of genes
-gene_list <- getCNVgenes(CNV_call = cnv_data)
+gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 
 # Example 2
 # Causes an error
-cnv_data_unmodified <- example_CNV_call
+cnv_data_modified <- sample_CNV_call[, 1:3]
 
-gene_list2 <- getCNVgenes(CNV_call = cnv_data_unmodified)
+gene_list2 <- getCNVgenes(CNV_call = cnv_data_modified)
 
 
 # Example 3
 # Produces piechart plot
-cnv_data <- example_CNV_call
-colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-
-# Get list of genes and piechart graphical output
-gene_list3 <- getCNVgenes(CNV_call = cnv_data, show_piechart = TRUE)
+gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
 
 # Example 4
 # Specifying chromosome number and reference genome
-cnv_data <- example_CNV_call
-colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-
 # Get list of genes for chromosome 22 using the GRCh37 reference genome
-gene_list4 <- getCNVgenes(CNV_call = cnv_data, chromosome_number = "22", reference_genome = "GRCh37")
+gene_list4 <- getCNVgenes(CNV_call = sample_CNV_call, chromosome_number = "22", reference_genome = "GRCh37")
 
 
 \dontrun{
-# Example 2
-# Obtain an external sample RNAseq dataset
-# Need to download package using install.packages("MBCluster.Seq")
-library(MBCluster.Seq)
-data("Count")
-dim(Count)
-
-# Calculate information criteria value
-InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
-                                             nClusters = 2,
-                                             dimensionality = ncol(Count),
-                                             observations = nrow(Count),
-                                             probability = c(0.5, 0.5))
-InfCriteriaResults$BICresults
+# Example 5
+# Larger dataset, runs slower
+large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
 }
+
 }
 \references{
 Akaike, H. (1973). Information theory and an extension of the maximum
