@@ -68,21 +68,13 @@ browseVignettes("psychCNVassoc")
 4.  ***plotDiseaseCloud*** for producing a wordcloud of diseases that
     are associated with the list of genes.
 
-The package also contains an example CNV call dataset named
-example_CNV_call. Refer to package vignettes for more details. An
-overview of the package is illustrated below.
+The package also contains two example CNV call datasets named
+sample_CNV_call and large_CNV_call. Refer to package vignettes for more
+details. An overview of the package is illustrated below.
 
 ![](./inst/extdata/example.png)
 
 ## Contributions
-
-Provide a paragraph clearly indicating the name of the author of the
-package and contributions from the author. Outline contributions from
-other packages/sources for each function. Outline contributions from
-generative AI tool(s) for each function. Include how the tools were used
-and how the results from AI tools were incorporated. Remember your
-individual contributions to the package are important. E.g., <br> <br>
-<br>
 
 The author of the package is Angela Uzelac. The author wrote the
 *getCNVgenes* function which produces a list of genes encompassed within
@@ -122,9 +114,9 @@ generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics.
   version 0.7-11, <https://CRAN.R-project.org/package=tm>.
 
 - Steffen Durinck, Paul T. Spellman, Ewan Birney and Wolfgang Huber
-  (2009). Mapping identifiers for the integration of genomic datasets
-  with the R/Bioconductor package biomaRt. Nature Protocols 4, 1184-1191
-  .
+  (2009). *Mapping identifiers for the integration of genomic datasets
+  with the R/Bioconductor package biomaRt*. Nature Protocols 4,
+  1184-1191 .
 
 - Gutierrez-Sacristan A, Hernandez-Ferrer C, Gonzalez J, Furlong L
   (2023). *psygenet2r: psygenet2r - An R package for querying PsyGeNET
