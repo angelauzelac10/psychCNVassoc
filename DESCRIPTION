@@ -1,28 +1,22 @@
 Package: psychCNVassoc
 Type: Package
-Title: Determine Association Between Copy Number Variants and Psychiatric Disorders
+Title: Association Between Copy Number Variants and Psychiatric Disorders
 Version: 0.1.0
 Authors@R: person("Angela", "Uzelac", 
                   email = "angela.uzelac@mail.utoronto.ca", 
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0001-9292-1920"))
 Maintainer: Angela Uzelac <angela.uzelac@mail.utoronto.ca>
-Description: Illustrate required and optional components of an 
-     R package as per guidelines of BCB410H: Applied Bioinformatics.
+Description: Determining the impact of pathogenic CNVs on psychiatric disorders using the PsyGeNet
+              curated database of gene-disease associations.
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.1.0)
 biocViews:
 Remotes: github::hadley/ggplot2
 Imports: 
-    mclust,
-    stats,
-    edgeR,
     ggplot2,
-    shiny,
-    shinyalert,
     dplyr,
-    wordcloud,
     wordcloud2,
     tm,
     biomaRt,
@@ -33,8 +27,7 @@ RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
-    rmarkdown,
-    RTCGA.rnaseq
+    rmarkdown
 VignetteBuilder: knitr
 URL: https://github.com/angelauzelac10/psychCNVassoc
 BugReports: https://github.com/angelauzelac10/psychCNVassoc/issues
