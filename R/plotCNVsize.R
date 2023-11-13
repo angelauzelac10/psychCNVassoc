@@ -16,35 +16,25 @@
 #' @examples
 #' # Example 1
 #' # Using example_CNV_call dataset available with package
-#' cnv_data <- example_CNV_call
-#' colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-#' cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-#'
 #' # Plot distribution of CNV sizes
-#' plotCNVsize(CNV_call = cnv_data)
+#' plotCNVsize(CNV_call = sample_CNV_call)
 #'
 #' # Example 2
 #' # Produces error
-#' cnv_data_unmodified <- example_CNV_call
-#' plotCNVsize(CNV_call = cnv_data_unmodified)
+#' cnv_data_modified <- sample_CNV_call[, 1:3]
+#' plotCNVsize(CNV_call = cnv_data_modified)
+#'
+#' # Example 3
+#' # Specifying chromosome number
+#' plotCNVsize(CNV_call = sample_CNV_call, chromosome_number = "22")
 #'
 #'
 #' \dontrun{
-#' # Example 2
-#' # Obtain an external sample RNAseq dataset
-#' # Need to download package using install.packages("MBCluster.Seq")
-#' library(MBCluster.Seq)
-#' data("Count")
-#' dim(Count)
-#'
-#' # Calculate information criteria value
-#' InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
-#'                                              nClusters = 2,
-#'                                              dimensionality = ncol(Count),
-#'                                              observations = nrow(Count),
-#'                                              probability = c(0.5, 0.5))
-#' InfCriteriaResults$BICresults
+#' # Example 4
+#' # Larger dataset, runs slower
+#' plotCNVsize(CNV_call = large_CNV_call)
 #'}
+#'
 #' @references
 #'Akaike, H. (1973). Information theory and an extension of the maximum
 #'likelihood principle. In \emph{Second International Symposium on Information

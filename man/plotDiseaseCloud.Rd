@@ -23,12 +23,8 @@ association results.
 \examples{
 # Example 1
 # Using example_CNV_call dataset available with package
-cnv_data <- example_CNV_call
-colnames(cnv_data) <- c("chromosome_name", "start_position", "end_position", "type")
-cnv_data$chromosome_name <- gsub("^chr", "", cnv_data$chromosome_name)
-
 # Get list of genes
-gene_list <- getCNVgenes(CNV_call = cnv_data)
+gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
 gene_disease_assoc <- getDiseaseAssoc(gene_list)
@@ -36,22 +32,23 @@ gene_disease_assoc <- getDiseaseAssoc(gene_list)
 # Plot wordcloud of disease/disorder names
 plotDiseaseCloud(gene_disease_assoc)
 
-\dontrun{
 # Example 2
-# Obtain an external sample RNAseq dataset
-# Need to download package using install.packages("MBCluster.Seq")
-library(MBCluster.Seq)
-data("Count")
-dim(Count)
+# Produces error
+plotDiseaseCloud(c("ABC", "DEF", "GHI"))
 
-# Calculate information criteria value
-InfCriteriaResults <- InfCriteriaCalculation(loglikelihood = -5080,
-                                             nClusters = 2,
-                                             dimensionality = ncol(Count),
-                                             observations = nrow(Count),
-                                             probability = c(0.5, 0.5))
-InfCriteriaResults$BICresults
+\dontrun{
+# Example 3
+# Larger dataset, runs slower
+# Get list of genes
+large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+
+# Get gene-disease association
+gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
+
+# Plot wordcloud of disease/disorder names
+plotDiseaseCloud(gene_disease_assoc2)
 }
+
 }
 \references{
 Akaike, H. (1973). Information theory and an extension of the maximum
