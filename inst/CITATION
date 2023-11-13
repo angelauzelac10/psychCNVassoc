@@ -1,0 +1,12 @@
+citHeader("To cite psychCNVassoc in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "psychCNVassoc: Determining the Association Between Copy Number Variants and Psychiatric Disorders",
+  author       = "Angela Uzelac",
+  note         = "Unpublished",
+  year         = "2023",
+
+  textVersion  =
+  paste("Uzelac, A. (2023) psychCNVassoc: Determining the Association Between Copy Number Variants and Psychiatric Disorders.
+        Unpublished. URL https://github.com/angelauzelac10/psychCNVassoc.")
+)
