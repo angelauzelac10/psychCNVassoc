@@ -107,6 +107,34 @@ generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics.
 
 ## References
 
+- H. Wickham (2016). *ggplot2: Elegant Graphics for Data Analysis*.
+  Springer-Verlag New York. <https://ggplot2.tidyverse.org>
+
+- Wickham H, François R, Henry L, Müller K, Vaughan D (2023). *dplyr: A
+  Grammar of Data Manipulation*. R package version 1.1.3,
+  <https://CRAN.R-project.org/package=dplyr>.
+
+- Lang D, Chien G (2018). *wordcloud2: Create Word Cloud by
+  ‘htmlwidget’*. R package version 0.2.1,
+  <https://CRAN.R-project.org/package=wordcloud2>.
+
+- Feinerer I, Hornik K (2023). *tm: Text Mining Package*. R package
+  version 0.7-11, <https://CRAN.R-project.org/package=tm>.
+
+- Steffen Durinck, Paul T. Spellman, Ewan Birney and Wolfgang Huber
+  (2009). Mapping identifiers for the integration of genomic datasets
+  with the R/Bioconductor package biomaRt. Nature Protocols 4, 1184-1191
+  .
+
+- Gutierrez-Sacristan A, Hernandez-Ferrer C, Gonzalez J, Furlong L
+  (2023). *psygenet2r: psygenet2r - An R package for querying PsyGeNET
+  and to perform comorbidity studies in psychiatric disorders*.
+  <doi:10.18129/B9.bioc.psygenet2r>
+  <https://doi.org/10.18129/B9.bioc.psygenet2r>, R package version
+  1.33.5, <https://bioconductor.org/packages/psygenet2r>.
+
+<br> <br> <br> <br>
+
 - Akaike, H. (1973). Information theory and an extension of the maximum
   likelihood principle. In *Second International Symposium on
   Information Theory*, New York, USA, 267–281. Springer Verlag.
