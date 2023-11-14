@@ -52,43 +52,43 @@ Under construction
 
 ## Components
 
-![](./psychCNVassoc_introduction_figure.png)
+![](./psychCNVassoc_introduction_figure.png){width = 30%}
 
 ## Sample Usage
 
 To load the CNV regions from sample_CNV_call.rda, provided in the /data folder:
 
-```{r}
+```{r, eval = FALSE}
 cnv_data <- sample_CNV_call
 ```
 
 To plot the size distribution of provided CNVs:
 
-```{r}
+```{r, eval = FALSE}
 plotCNVsize(cnv_data)
 ```
 
 To plot the size distribution of provided CNVs for a specific chromosome:
 
-```{r}
+```{r, eval = FALSE}
 plotCNVsize(cnv_data, chromosome_number = "17")
 ```
 
 To obtain all the genes that are found in the provided CNVs and visualize the distribution of genic vs non-genic CNVs:
 
-```{r}
+```{r, eval = FALSE}
 gene_list <- getCNVgenes(cnv_data, show_piechart = TRUE)
 ```
 
 To obtain a gene-disease association table from the obtained list of genes encompassed by CNVs:
 
-```{r}
+```{r, eval = FALSE}
 gene_disease_assoc <- getDiseaseAssoc(gene_list)
 ```
 
 To visualize which psychiatric disorders are associated with the list of genes, create a wordcloud using:
 
-```{r}
+```{r, eval = FALSE}
 plotDiseaseCloud(gene_disease_assoc)
 ```
 
