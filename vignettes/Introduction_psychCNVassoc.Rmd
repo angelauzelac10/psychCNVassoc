@@ -52,7 +52,7 @@ Under construction
 
 ## Components
 
-![](./psychCNVassoc_introduction_figure.png){width = 30%}
+<img src="/psychCNVassoc_introduction_figure.png" alt="psychCNVassoc_introduction_figure" width="700"/>
 
 ## Sample Usage
 
