@@ -9,6 +9,9 @@ plotDiseaseCloud(disease_assoc_tbl, remove_most_freq = 0)
 \arguments{
 \item{disease_assoc_tbl}{A data frame containing gene-disease associations. Must
 contain a column called DiseaseName.}
+
+\item{remove_most_freq}{A positive integer specifying the number of most frequent
+terms to not include in the wordcloud.}
 }
 \value{
 Returns a wordcloud plot where the size of the word represents its
@@ -18,7 +21,10 @@ frequency in a gene-disease association table.
 Given a data frame of gene-disease associations, produces a wordcloud showing the
 most frequent disease names associated with a list of genes found in Copy Number Variants (CNVs).
 The size of the word represents its frequency in the gene-disease
-association results.
+association results. Since the PsyGeNet database has more gene annotations for
+certain diseases (e.g. Schizophrenia, Depression) more than others, users have the option
+to specify the number of top terms to remove from the wordcloud in order to better
+visualize less frequent terms.
 }
 \examples{
 # Example 1
@@ -32,20 +38,13 @@ gene_disease_assoc <- getDiseaseAssoc(gene_list)
 # Plot wordcloud of disease/disorder terms
 plotDiseaseCloud(gene_disease_assoc)
 
+# Removing top term to focus on less documented terms
+plotDiseaseCloud(gene_disease_assoc2, 1)
+
 # Example 2
 # Produces error
 plotDiseaseCloud(c("ABC", "DEF", "GHI"))
 
-# Example 3
-# Removing top term to focus on less documented terms
-# Get list of genes
-gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call)
-
-# Get gene-disease association
-gene_disease_assoc2 <- getDiseaseAssoc(gene_list2)
-
-# Plot wordcloud of disease/disorder terms
-plotDiseaseCloud(gene_disease_assoc2, 1)
 
 \dontrun{
 # Example 4
@@ -54,13 +53,13 @@ plotDiseaseCloud(gene_disease_assoc2, 1)
 large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc3 <- getDiseaseAssoc(large_gene_list)
+gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
 
 # Plot wordcloud of disease/disorder names
-plotDiseaseCloud(gene_disease_assoc3)
+plotDiseaseCloud(gene_disease_assoc2)
 
 # Plot wordcloud without top 2 terms
-plotDiseaseCloud(gene_disease_assoc3, 2)
+plotDiseaseCloud(gene_disease_assoc2, 2)
 }
 
 }
