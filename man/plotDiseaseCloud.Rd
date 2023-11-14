@@ -39,15 +39,11 @@ gene_disease_assoc <- getDiseaseAssoc(gene_list)
 plotDiseaseCloud(gene_disease_assoc)
 
 # Removing top term to focus on less documented terms
-plotDiseaseCloud(gene_disease_assoc2, 1)
-
-# Example 2
-# Produces error
-plotDiseaseCloud(c("ABC", "DEF", "GHI"))
+plotDiseaseCloud(gene_disease_assoc, 1)
 
 
 \dontrun{
-# Example 4
+# Example 2
 # Larger dataset, runs slower
 # Get list of genes
 large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)

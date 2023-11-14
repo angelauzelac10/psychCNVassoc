@@ -27,25 +27,21 @@
 #' # Get list of genes
 #' gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 #'
+#'
 #' # Example 2
-#' # Causes an error
-#' cnv_data_modified <- sample_CNV_call[, 1:3]
-#'
-#' gene_list2 <- getCNVgenes(CNV_call = cnv_data_modified)
-#'
+#' # Produces piechart plot
+#' gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
 #'
 #' # Example 3
-#' # Produces piechart plot
-#' gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
-#'
-#' # Example 4
 #' # Specifying chromosome number and reference genome
 #' # Get list of genes for chromosome 22 using the GRCh37 reference genome
-#' gene_list4 <- getCNVgenes(CNV_call = sample_CNV_call, chromosome_number = "22", reference_genome = "GRCh37")
+#' gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call,
+#'                           chromosome_number = "22",
+#'                           reference_genome = "GRCh37")
 #'
 #'
 #' \dontrun{
-#' # Example 5
+#' # Example 4
 #' # Larger dataset, runs slower
 #' large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
 #'}
@@ -66,6 +62,9 @@
 #' @importFrom biomaRt useEnsembl
 #' @importFrom biomaRt getBM
 #' @import dplyr
+#' @importFrom graphics legend
+#' @importFrom graphics par
+#' @importFrom graphics pie
 
 getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "GRCh38", show_piechart = FALSE){
 
@@ -78,6 +77,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   }
   if (!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
+  }
+  if (!is.logical(show_piechart)){
+    stop("Parameter show_piechart must be logical type (i.e. TRUE or FALSE).")
   }
   if (missing(reference_genome)){
     warning("Reference genome was not specified. GRCh38 was used.")

@@ -27,19 +27,15 @@ gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 # Get gene-disease association
 gene_disease_assoc <- getDiseaseAssoc(gene_list)
 
-# Example 2
-# Produces error
-gene_list_2 <- c(123, 234, 345)
-gene_disease_assoc2 <- getDiseaseAssoc(gene_list2)
 
 \dontrun{
-# Example 3
+# Example 2
 # Larger dataset, runs slower
 # Get list of genes
 large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc3 <- getDiseaseAssoc(large_gene_list)
+gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
 }
 
 }

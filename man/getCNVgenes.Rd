@@ -44,25 +44,21 @@ outputs a graph showing the distribution of genic vs. non-genic CNVs.
 # Get list of genes
 gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 
+
 # Example 2
-# Causes an error
-cnv_data_modified <- sample_CNV_call[, 1:3]
-
-gene_list2 <- getCNVgenes(CNV_call = cnv_data_modified)
-
+# Produces piechart plot
+gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
 
 # Example 3
-# Produces piechart plot
-gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
-
-# Example 4
 # Specifying chromosome number and reference genome
 # Get list of genes for chromosome 22 using the GRCh37 reference genome
-gene_list4 <- getCNVgenes(CNV_call = sample_CNV_call, chromosome_number = "22", reference_genome = "GRCh37")
+gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call,
+                          chromosome_number = "22",
+                          reference_genome = "GRCh37")
 
 
 \dontrun{
-# Example 5
+# Example 4
 # Larger dataset, runs slower
 large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
 }

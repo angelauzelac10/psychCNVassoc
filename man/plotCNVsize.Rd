@@ -30,17 +30,12 @@ Optionally, plots the size distribution for a specified chromosome.
 plotCNVsize(CNV_call = sample_CNV_call)
 
 # Example 2
-# Produces error
-cnv_data_modified <- sample_CNV_call[, 1:3]
-plotCNVsize(CNV_call = cnv_data_modified)
-
-# Example 3
 # Specifying chromosome number
 plotCNVsize(CNV_call = sample_CNV_call, chromosome_number = "22")
 
 
 \dontrun{
-# Example 4
+# Example 3
 # Larger dataset, runs slower
 plotCNVsize(CNV_call = large_CNV_call)
 }

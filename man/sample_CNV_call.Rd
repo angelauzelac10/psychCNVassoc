@@ -7,10 +7,10 @@
 \format{
 A data frame with columns:
 \describe{
-\item{X1}{Chromosome name on which the CNV is found.}
-\item{X2}{Start position (base) of the CNV.}
-\item{X3}{End position (base) of the CNV.}
-\item{X4}{Type of the CNV, either DUP (duplication) or DEL (deletion).}
+\item{chromosome_name}{Chromosome name on which the CNV is found.}
+\item{start_position}{Start position (base) of the CNV.}
+\item{end_position}{End position (base) of the CNV.}
+\item{type}{Type of the CNV, either DUP (duplication) or DEL (deletion).}
 }
 }
 \source{

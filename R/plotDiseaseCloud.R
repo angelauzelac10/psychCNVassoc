@@ -29,15 +29,11 @@
 #' plotDiseaseCloud(gene_disease_assoc)
 #'
 #' # Removing top term to focus on less documented terms
-#' plotDiseaseCloud(gene_disease_assoc2, 1)
-#'
-#' # Example 2
-#' # Produces error
-#' plotDiseaseCloud(c("ABC", "DEF", "GHI"))
+#' plotDiseaseCloud(gene_disease_assoc, 1)
 #'
 #'
 #' \dontrun{
-#' # Example 4
+#' # Example 2
 #' # Larger dataset, runs slower
 #' # Get list of genes
 #' large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
@@ -116,9 +112,11 @@ plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
   word_freq_df$log_freq <- log(word_freq_df$freq)
 
   # remove the specified number of top results to view less frequent terms more easily
-  if (remove_most_freq > 0){
-    word_freq_df <- word_freq_df[order(-word_freq_df$freq), ]
-    word_freq_df <- word_freq_df[(remove_most_freq + 1):nrow(word_freq_df), ]
+  if (remove_most_freq >= nrow(word_freq_df)){
+      stop("All word frequencies were removed. Cannot produce wordcloud.")
+  } else if (remove_most_freq > 0){
+      word_freq_df <- word_freq_df[order(-word_freq_df$freq), ]
+      word_freq_df <- word_freq_df[(remove_most_freq + 1):nrow(word_freq_df), ]
   }
 
   # plot wordcloud
