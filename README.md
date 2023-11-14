@@ -83,23 +83,23 @@ functional genomic regions within the CNVs are retrieved from Ensembl.
 Two functions were used from the `biomaRt` package, *useEnsembl* to
 connect to the specified genome dataset, and *getBM* to obtain all genes
 annotated with their chromosomal location. The `dplyr` package was also
-used in this function. The function *inner_join* was used to join the
-table of genes with the table of CNVs, and *filter* was used to select
-rows in the joined table where the gene coordinates are within the CNV
-coordinates. The author also wrote the function *getDiseaseAssoc* which
-makes use of the *psygenetGene* function from the `psygenet2r` package
-to obtain gene-disease associations from the provided list of genes. The
-function *plotDiseaseCloud* makes use of the `wordcloud2` and `tm`
-packages to clean text data, create a term-document matrix, and plot a
-wordcloud of the diseases associated with the pathogenic CNVs. The
-function *plotCNVsize* plots the distribution of CNV sizes, with the
-code inspired by the `CNVRS-study` package. The function
-*plotCNVgeneImpact* (not available to users) was developed using the
-generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics.
+used in this function, *inner_join* was used to join the table of genes
+with the table of CNVs, and *filter* was used to select rows in the
+joined table where the gene coordinates are within the CNV coordinates.
+The author also wrote the function *getDiseaseAssoc* which makes use of
+the *psygenetGene* function from the `psygenet2r` package to obtain
+gene-disease associations from the provided list of genes. The function
+*plotDiseaseCloud* makes use of the `wordcloud2` and `tm` packages to
+clean text data, create a term-document matrix, and plot a wordcloud of
+the diseases associated with pathogenic CNVs. The function *plotCNVsize*
+plots the distribution of CNV sizes, with the code inspired by the
+`CNVRS-study` package. The function *plotCNVgeneImpact* (not available
+to users) was developed using the generative AI tool ChatGPT (OpenAI,
+2023) to aid with graphics setup.
 
 ## References
 
-- H. Wickham (2016). *ggplot2: Elegant Graphics for Data Analysis*.
+- Wickham H (2016). *ggplot2: Elegant Graphics for Data Analysis*.
   Springer-Verlag New York. <https://ggplot2.tidyverse.org>
 
 - Wickham H, François R, Henry L, Müller K, Vaughan D (2023). *dplyr: A
@@ -113,10 +113,9 @@ generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics.
 - Feinerer I, Hornik K (2023). *tm: Text Mining Package*. R package
   version 0.7-11, <https://CRAN.R-project.org/package=tm>.
 
-- Steffen Durinck, Paul T. Spellman, Ewan Birney and Wolfgang Huber
-  (2009). *Mapping identifiers for the integration of genomic datasets
-  with the R/Bioconductor package biomaRt*. Nature Protocols 4,
-  1184-1191 .
+- Durinck S, Spellman PT, Birney E, Huber W (2009). *Mapping identifiers
+  for the integration of genomic datasets with the R/Bioconductor
+  package biomaRt*. Nature Protocols 4, 1184-1191 .
 
 - Gutierrez-Sacristan A, Hernandez-Ferrer C, Gonzalez J, Furlong L
   (2023). *psygenet2r: psygenet2r - An R package for querying PsyGeNET
@@ -125,41 +124,36 @@ generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics.
   <https://doi.org/10.18129/B9.bioc.psygenet2r>, R package version
   1.33.5, <https://bioconductor.org/packages/psygenet2r>.
 
-<br> <br> <br> <br>
+- BiomaRt Bioconductor R package documentation. (2023). Retrieved
+  November 13, 2023, from
+  <http://useast.ensembl.org/info/data/biomart/biomart_r_package.html>
 
-- Akaike, H. (1973). Information theory and an extension of the maximum
-  likelihood principle. In *Second International Symposium on
-  Information Theory*, New York, USA, 267–281. Springer Verlag.
-  <https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15>.
+- Rul CVd (2019). How to Generate Word Clouds in R. Medium.
+  <https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a>
 
-- Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture
-  model for clustering with the integrated classification likelihood.
-  *IEEE Transactions on Pattern Analysis and Machine Intelligence* 22.
-  <https://hal.inria.fr/inria-00073163/document>
+- Gurbich T, Ilinsky V (2020). *ClassifyCNV: A tool for clinical
+  annotation of copy-number variants*. Scientific Reports, 10(1),
+  Article 1. <https://doi.org/10.1038/s41598-020-76425-3>
 
-- BioRender. (2020). Image created by Silva, A. Retrieved October 30,
-  2020, from <https://app.biorender.com/>
+- Merico D, <joseph.r.lugo@gmail.com> RZpbJL (2023). *cnvGSA: Gene Set
+  Analysis of (Rare) Copy Number Variants*.
+  <doi:10.18129/B9.bioc.cnvGSA>, R package version 1.46.0,
+  <https://bioconductor.org/packages/cnvGSA>.
 
-- McCarthy, D. J., Chen Y. and Smyth, G. K. (2012). Differential
-  expression analysis of multifactor RNA-Seq experiments with respect to
-  biological variation. *Nucleic Acids Research* 40. 4288-4297.
-  <https://pubmed.ncbi.nlm.nih.gov/22287627/>
+- Silva VHd, Ramos M, Groenen M, Crooijmans R, Johansson A, Regitano L,
+  Coutinho L, Zimmer R, Waldron L, Geistlinger L (2020). *CNVRanger:
+  association analysis of CNVs with gene expression and quantitative
+  phenotypes*. Bioinformatics, 36(3), 972-73.
+  <https://doi.org/10.1093/bioinformatics/btz632>.
 
-- R Core Team (2023). R: A language and environment for statistical
-  computing. R Foundation for Statistical Computing, Vienna, Austria.
-  <https://www.R-project.org/>
+- OpenAI. (2023, November 7). Code snippet from conversation with
+  ChatGPT.
 
-- Schwarz, G. (1978). Estimating the dimension of a model. *The Annals
-  of Statistics* 6, 461–464.
-  <https://projecteuclid.org/euclid.aos/1176344136>.
+- Du J (2022) *CNVds: Analyzing Human CNVs Based on Dosage Sensitivity
+  Scores*. Unpublished. URL <https://github.com/jenydu/CNVds>.
 
-- Scrucca, L., Fop, M., Murphy, T. B. and Raftery, A. E. (2016) mclust
-  5: clustering, classification and density estimation using Gaussian
-  finite mixture models. *The R Journal* 8(1), 289-317.
-  <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5096736/>
-
-- Wickham, H. and Bryan, J. (2019). *R Packages* (2nd edition). Newton,
-  Massachusetts: O’Reilly Media. <https://r-pkgs.org/>
+- Du J (2023) *CNVRS-study*. Unpublished. URL
+  <https://github.com/jenydu/CNVRS-study>.
 
 ## Acknowledgements
 
