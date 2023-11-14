@@ -99,6 +99,8 @@ The author of the package is Angela Uzelac. The author wrote the *getCNVgenes* f
 
 - Girdher H (2023). _TDM (Term Document Matrix) and DTM (Document Term Matrix)_. Analytics Vidhya. <https://medium.com/analytics-vidhya/tdm-term-document-matrix-and-dtm-document-term-matrix-8b07c58957e2>
 
+- BioRender (2023). Image created by Uzelac, A. Retrieved November 13, 2023, from <https://app.biorender.com/>
+
 
 
 ## Acknowledgements

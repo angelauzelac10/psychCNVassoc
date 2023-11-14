@@ -152,6 +152,9 @@ to users) was developed using the generative AI tool ChatGPT (OpenAI,
   Matrix)*. Analytics Vidhya.
   <https://medium.com/analytics-vidhya/tdm-term-document-matrix-and-dtm-document-term-matrix-8b07c58957e2>
 
+- BioRender (2023). Image created by Uzelac, A. Retrieved November 13,
+  2023, from <https://app.biorender.com/>
+
 ## Acknowledgements
 
 This package was developed as part of an assessment for 2019-2023
