@@ -51,18 +51,15 @@ plotDiseaseCloud(gene_disease_assoc2)
 
 }
 \references{
-Akaike, H. (1973). Information theory and an extension of the maximum
-likelihood principle. In \emph{Second International Symposium on Information
-Theory}, New York, NY, USA, pp. 267–281. Springer Verlag. \href{https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15}{Link}
+Feinerer I, Hornik K (2023). \emph{tm: Text Mining Package}.
+R package version 0.7-11, \href{https://CRAN.R-project.org/package=tm}{Link}.
 
-Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for
-clustering with the integrated classification likelihood. \emph{IEEE Transactions on Pattern
-Analysis and Machine Intelligence} 22. \href{https://hal.inria.fr/inria-00073163/document}{Link}
+Lang D, Chien G (2018). \emph{wordcloud2: Create Word Cloud by 'htmlwidget'}.
+R package version 0.2.1, \href{https://CRAN.R-project.org/package=wordcloud2}{Link}.
 
-Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics} 6, 461–464.
-\href{https://projecteuclid.org/euclid.aos/1176344136}{Link}.
+Rul CVd (2019). \emph{How to Generate Word Clouds in R}. Medium.
+\href{https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a}{Link}.
 
-Yaqing, S. (2012). MBCluster.Seq: Model-Based Clustering for RNA-seq
-Data. R package version 1.0.
-\href{https://CRAN.R-project.org/package=MBCluster.Seq}{Link}.
+Girdher H (2023). \emph{TDM (Term Document Matrix) and DTM (Document Term Matrix)}. Analytics Vidhya.
+\href{https://medium.com/analytics-vidhya/tdm-term-document-matrix-and-dtm-document-term-matrix-8b07c58957e2}{Link}.
 }

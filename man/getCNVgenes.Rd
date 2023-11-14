@@ -69,18 +69,14 @@ large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
 
 }
 \references{
-Akaike, H. (1973). Information theory and an extension of the maximum
-likelihood principle. In \emph{Second International Symposium on Information
-Theory}, New York, NY, USA, pp. 267–281. Springer Verlag. \href{https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15}{Link}
+Wickham H, François R, Henry L, Müller K, Vaughan D (2023). \emph{dplyr: A Grammar of Data Manipulation}. R package version 1.1.3, \href{https://CRAN.R-project.org/package=dplyr}{Link}.
 
-Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for
-clustering with the integrated classification likelihood. \emph{IEEE Transactions on Pattern
-Analysis and Machine Intelligence} 22. \href{https://hal.inria.fr/inria-00073163/document}{Link}
+Durinck S, Spellman PT, Birney E, Huber W (2009). \emph{Mapping identifiers for the integration of genomic datasets with the R/Bioconductor package biomaRt}. Nature Protocols 4, 1184-1191 .
 
-Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics} 6, 461–464.
-\href{https://projecteuclid.org/euclid.aos/1176344136}{Link}.
+BiomaRt Bioconductor R package documentation. (2023). Retrieved November 13, 2023, from \href{http://useast.ensembl.org/info/data/biomart/biomart_r_package.html}{Link}
 
-Yaqing, S. (2012). MBCluster.Seq: Model-Based Clustering for RNA-seq
-Data. R package version 1.0.
-\href{https://CRAN.R-project.org/package=MBCluster.Seq}{Link}.
+Gurbich T, Ilinsky V (2020). \emph{ClassifyCNV: A tool for clinical annotation of copy-number variants}. Scientific Reports, 10(1), Article 1. \href{https://doi.org/10.1038/s41598-020-76425-3}{Link}
+
+Du J (2022). \emph{CNVds: Analyzing Human CNVs Based on Dosage Sensitivity Scores}.
+Unpublished. \href{https://github.com/jenydu/CNVds}{URL}.
 }

@@ -128,7 +128,7 @@ to users) was developed using the generative AI tool ChatGPT (OpenAI,
   November 13, 2023, from
   <http://useast.ensembl.org/info/data/biomart/biomart_r_package.html>
 
-- Rul CVd (2019). How to Generate Word Clouds in R. Medium.
+- Rul CVd (2019). *How to Generate Word Clouds in R*. Medium.
   <https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a>
 
 - Gurbich T, Ilinsky V (2020). *ClassifyCNV: A tool for clinical
@@ -149,11 +149,15 @@ to users) was developed using the generative AI tool ChatGPT (OpenAI,
 - OpenAI. (2023, November 7). Code snippet from conversation with
   ChatGPT.
 
-- Du J (2022) *CNVds: Analyzing Human CNVs Based on Dosage Sensitivity
+- Du J (2022). *CNVds: Analyzing Human CNVs Based on Dosage Sensitivity
   Scores*. Unpublished. URL <https://github.com/jenydu/CNVds>.
 
-- Du J (2023) *CNVRS-study*. Unpublished. URL
+- Du J (2023). *CNVRS-study*. Unpublished. URL
   <https://github.com/jenydu/CNVRS-study>.
+
+- Girdher H (2023). *TDM (Term Document Matrix) and DTM (Document Term
+  Matrix)*. Analytics Vidhya.
+  <https://medium.com/analytics-vidhya/tdm-term-document-matrix-and-dtm-document-term-matrix-8b07c58957e2>
 
 ## Acknowledgements
 

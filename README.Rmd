@@ -87,7 +87,7 @@ The author of the package is Angela Uzelac. The author wrote the *getCNVgenes* f
 
 - BiomaRt Bioconductor R package documentation. (2023). Retrieved November 13, 2023, from <http://useast.ensembl.org/info/data/biomart/biomart_r_package.html>
 
-- Rul CVd (2019). How to Generate Word Clouds in R. Medium. <https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a>
+- Rul CVd (2019). _How to Generate Word Clouds in R_. Medium. <https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a>
 
 - Gurbich T, Ilinsky V (2020). _ClassifyCNV: A tool for clinical annotation of copy-number variants_. Scientific Reports, 10(1), Article 1. <https://doi.org/10.1038/s41598-020-76425-3>
 
@@ -97,9 +97,11 @@ The author of the package is Angela Uzelac. The author wrote the *getCNVgenes* f
 
 - OpenAI. (2023, November 7). Code snippet from conversation with ChatGPT.
 
-- Du J (2022) _CNVds: Analyzing Human CNVs Based on Dosage Sensitivity Scores_. Unpublished. URL <https://github.com/jenydu/CNVds>.
+- Du J (2022). _CNVds: Analyzing Human CNVs Based on Dosage Sensitivity Scores_. Unpublished. URL <https://github.com/jenydu/CNVds>.
   
-- Du J (2023) _CNVRS-study_. Unpublished. URL <https://github.com/jenydu/CNVRS-study>.
+- Du J (2023). _CNVRS-study_. Unpublished. URL <https://github.com/jenydu/CNVRS-study>.
+
+- Girdher H (2023). _TDM (Term Document Matrix) and DTM (Document Term Matrix)_. Analytics Vidhya. <https://medium.com/analytics-vidhya/tdm-term-document-matrix-and-dtm-document-term-matrix-8b07c58957e2>
 
 
 
