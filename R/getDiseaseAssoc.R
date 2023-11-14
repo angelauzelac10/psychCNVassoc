@@ -77,3 +77,5 @@ getDiseaseAssoc <- function(gene_list){
   return(psy_gene_disease_tbl)
 
 }
+
+# [END]

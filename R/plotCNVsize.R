@@ -91,3 +91,5 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
 
   cnv_size_hist
 }
+
+# [END]

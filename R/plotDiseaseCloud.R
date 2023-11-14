@@ -125,3 +125,5 @@ plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
   wordcloud2::wordcloud2(word_freq_df[ , c("word", "log_freq")], size = 0.3)
 
 }
+
+# [END]
