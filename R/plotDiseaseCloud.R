@@ -20,24 +20,38 @@
 #' # Get gene-disease association
 #' gene_disease_assoc <- getDiseaseAssoc(gene_list)
 #'
-#' # Plot wordcloud of disease/disorder names
+#' # Plot wordcloud of disease/disorder terms
 #' plotDiseaseCloud(gene_disease_assoc)
 #'
 #' # Example 2
 #' # Produces error
 #' plotDiseaseCloud(c("ABC", "DEF", "GHI"))
 #'
-#' \dontrun{
 #' # Example 3
+#' # Removing top term to focus on less documented terms
+#' # Get list of genes
+#' gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call)
+#'
+#' # Get gene-disease association
+#' gene_disease_assoc2 <- getDiseaseAssoc(gene_list2)
+#'
+#' # Plot wordcloud of disease/disorder terms
+#' plotDiseaseCloud(gene_disease_assoc2, 1)
+#'
+#' \dontrun{
+#' # Example 4
 #' # Larger dataset, runs slower
 #' # Get list of genes
 #' large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 #'
 #' # Get gene-disease association
-#' gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
+#' gene_disease_assoc3 <- getDiseaseAssoc(large_gene_list)
 #'
 #' # Plot wordcloud of disease/disorder names
-#' plotDiseaseCloud(gene_disease_assoc2)
+#' plotDiseaseCloud(gene_disease_assoc3)
+#'
+#' # Plot wordcloud without top 2 terms
+#' plotDiseaseCloud(gene_disease_assoc3, 2)
 #'}
 #'
 #' @references
@@ -59,7 +73,7 @@
 #' @import wordcloud2
 
 
-plotDiseaseCloud <- function(disease_assoc_tbl){
+plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
 
   # validate input table
   if(!is.data.frame(disease_assoc_tbl)){
@@ -71,6 +85,9 @@ plotDiseaseCloud <- function(disease_assoc_tbl){
   if(!("DiseaseName" %in% colnames(disease_assoc_tbl))){
     stop("The input data frame must contain a column 'DiseaseName'.")
   }
+  if(!missing(remove_most_freq) && !is.numeric(remove_most_freq)){
+    stop("The second parameter (remove_most_freq) must be an number.")
+  }
 
   # create a collection of text documents from the disease name column
   corpus <- tm::Corpus(VectorSource(disease_assoc_tbl$DiseaseName))
@@ -81,7 +98,7 @@ plotDiseaseCloud <- function(disease_assoc_tbl){
     corpus <- tm::tm_map(corpus, removeNumbers)
     corpus <- tm::tm_map(corpus, removeWords, stopwords("english"))
     corpus <- tm::tm_map(corpus, stripWhitespace)
-    corpus <- tm::tm_map(corpus, removeWords, c("disorder", "disorders", "related", "state", "use", "related", "major", "symptom", "symptoms"))
+    corpus <- tm::tm_map(corpus, removeWords, c("disorder", "disorders", "related", "state", "use", "related", "major", "symptom", "symptoms", "mental"))
     corpus <- tm::tm_map(corpus,
                      replace_word <- function(x) {
                                         x <- gsub("abuse", "substance-abuse" , x)
@@ -98,8 +115,15 @@ plotDiseaseCloud <- function(disease_assoc_tbl){
   # second column represents their frequency
   word_freq <- rowSums(as.matrix(tdm))
   word_freq_df <- data.frame(word = names(word_freq), freq = word_freq)
+  word_freq_df$log_freq <- log(word_freq_df$freq)
+
+  # remove the specified number of top results to view less frequent terms more easily
+  if(remove_most_freq > 0){
+    word_freq_df <- word_freq_df[order(-word_freq_df$freq), ]
+    word_freq_df <- word_freq_df[(remove_most_freq + 1):nrow(word_freq_df), ]
+  }
 
   # plot wordcloud
-  wordcloud2::wordcloud2(word_freq_df)
+  wordcloud2::wordcloud2(word_freq_df[, c("word", "log_freq")], size = 0.3)
 
 }

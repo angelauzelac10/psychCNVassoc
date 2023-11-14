@@ -4,7 +4,7 @@
 \alias{plotDiseaseCloud}
 \title{Produce a wordcloud of the most common diseases}
 \usage{
-plotDiseaseCloud(disease_assoc_tbl)
+plotDiseaseCloud(disease_assoc_tbl, remove_most_freq = 0)
 }
 \arguments{
 \item{disease_assoc_tbl}{A data frame containing gene-disease associations. Must
@@ -29,24 +29,38 @@ gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 # Get gene-disease association
 gene_disease_assoc <- getDiseaseAssoc(gene_list)
 
-# Plot wordcloud of disease/disorder names
+# Plot wordcloud of disease/disorder terms
 plotDiseaseCloud(gene_disease_assoc)
 
 # Example 2
 # Produces error
 plotDiseaseCloud(c("ABC", "DEF", "GHI"))
 
-\dontrun{
 # Example 3
+# Removing top term to focus on less documented terms
+# Get list of genes
+gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call)
+
+# Get gene-disease association
+gene_disease_assoc2 <- getDiseaseAssoc(gene_list2)
+
+# Plot wordcloud of disease/disorder terms
+plotDiseaseCloud(gene_disease_assoc2, 1)
+
+\dontrun{
+# Example 4
 # Larger dataset, runs slower
 # Get list of genes
 large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
+gene_disease_assoc3 <- getDiseaseAssoc(large_gene_list)
 
 # Plot wordcloud of disease/disorder names
-plotDiseaseCloud(gene_disease_assoc2)
+plotDiseaseCloud(gene_disease_assoc3)
+
+# Plot wordcloud without top 2 terms
+plotDiseaseCloud(gene_disease_assoc3, 2)
 }
 
 }
