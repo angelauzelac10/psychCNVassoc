@@ -41,13 +41,6 @@ To run the Shiny app: Under construction
 
 ## Overview
 
-Provide the following commands, customized to your R package. Then
-provide a list of user accessible functions within the package and a
-brief description of each. Include one image illustrating the overview
-of the package that shows the inputs and outputs. Ensure the image is
-deposited in the correct location, as discussed in class. Point the user
-to vignettes for a tutorial of your package. E.g., <br> <br> <br>
-
 ``` r
 ls("package:psychCNVassoc")
 data(package = "psychCNVassoc") 
@@ -72,7 +65,7 @@ The package also contains two example CNV call datasets named
 sample_CNV_call and large_CNV_call. Refer to package vignettes for more
 details. An overview of the package is illustrated below.
 
-![](./inst/extdata/example.png)
+![](./inst/extdata/psychCNVassoc_example_figure.png)
 
 ## Contributions
 
