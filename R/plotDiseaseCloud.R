@@ -3,10 +3,15 @@
 #' Given a data frame of gene-disease associations, produces a wordcloud showing the
 #' most frequent disease names associated with a list of genes found in Copy Number Variants (CNVs).
 #' The size of the word represents its frequency in the gene-disease
-#' association results.
+#' association results. Since the PsyGeNet database has more gene annotations for
+#' certain diseases (e.g. Schizophrenia, Depression) more than others, users have the option
+#' to specify the number of top terms to remove from the wordcloud in order to better
+#' visualize less frequent terms.
 #'
 #' @param disease_assoc_tbl A data frame containing gene-disease associations. Must
 #'                          contain a column called DiseaseName.
+#' @param remove_most_freq A positive integer specifying the number of most frequent
+#'                          terms to not include in the wordcloud.
 #'
 #' @return Returns a wordcloud plot where the size of the word represents its
 #'          frequency in a gene-disease association table.
