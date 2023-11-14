@@ -52,7 +52,7 @@ Under construction
 
 ## Components
 
-<img src="/psychCNVassoc_introduction_figure.png" alt="psychCNVassoc_introduction_figure" width="700"/>
+<div style="text-align:center"><img src="psychCNVassoc_introduction_figure.png" alt="psychCNVassoc_introduction_figure" width="500"/>
 
 ## Sample Usage
 
@@ -136,6 +136,7 @@ Variants and Psychiatric Disorders.  Unpublished. URL
 
 
 ------------------------------------------------------------------------
+
 
 ```{r}
 sessionInfo()
