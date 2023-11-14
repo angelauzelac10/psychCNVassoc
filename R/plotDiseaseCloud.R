@@ -76,16 +76,16 @@
 plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
 
   # validate input table
-  if(!is.data.frame(disease_assoc_tbl)){
+  if (!is.data.frame(disease_assoc_tbl)){
     stop("The input to plotDiseaseCloud() must be a dataframe.")
   }
-  if(nrow(disease_assoc_tbl) < 1){
+  if (nrow(disease_assoc_tbl) < 1){
     stop("There are no rows in the input gene-disease association dataframe.")
   }
-  if(!("DiseaseName" %in% colnames(disease_assoc_tbl))){
+  if (!("DiseaseName" %in% colnames(disease_assoc_tbl))){
     stop("The input data frame must contain a column 'DiseaseName'.")
   }
-  if(!missing(remove_most_freq) && !is.numeric(remove_most_freq)){
+  if (!missing(remove_most_freq) && !is.numeric(remove_most_freq)){
     stop("The second parameter (remove_most_freq) must be an number.")
   }
 
@@ -118,12 +118,12 @@ plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
   word_freq_df$log_freq <- log(word_freq_df$freq)
 
   # remove the specified number of top results to view less frequent terms more easily
-  if(remove_most_freq > 0){
+  if (remove_most_freq > 0){
     word_freq_df <- word_freq_df[order(-word_freq_df$freq), ]
     word_freq_df <- word_freq_df[(remove_most_freq + 1):nrow(word_freq_df), ]
   }
 
   # plot wordcloud
-  wordcloud2::wordcloud2(word_freq_df[, c("word", "log_freq")], size = 0.3)
+  wordcloud2::wordcloud2(word_freq_df[ , c("word", "log_freq")], size = 0.3)
 
 }

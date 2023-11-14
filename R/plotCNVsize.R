@@ -55,13 +55,13 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
   validateCNVcall(CNV_call)
 
   # validate chromosome number
-  if(!is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
+  if (!is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
 
   # filter by chromosome number and dynamically set histogram title
   hist_title <- "Distribution of CNV Sizes"
-  if(!is.null(chromosome_number)){
+  if (!is.null(chromosome_number)){
     CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
     hist_title <- paste0(hist_title, " (Chromosome ", chromosome_number, ")", sep = "")
   }
@@ -72,7 +72,7 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
   # plot CNV size distribution histogram
   cnv_size_hist <- ggplot2::ggplot() +
     geom_histogram(CNV_call[CNV_call$type == 'DEL', ],
-                   mapping=aes(x = size, fill = "del"),
+                   mapping = aes(x = size, fill = "del"),
                    color = "black",
                    position = "stack") +
     scale_x_log10() +

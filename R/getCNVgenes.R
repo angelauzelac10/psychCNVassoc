@@ -73,18 +73,18 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   validateCNVcall(CNV_call)
 
   # validate chromosome number and reference genome
-  if(!missing(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
+  if (!missing(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
-  if(!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
+  if (!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
   }
-  if(missing(reference_genome)){
+  if (missing(reference_genome)){
     warning("Reference genome was not specified. GRCh38 was used.")
   }
 
   # filter by specified chromosome
-  if(!is.null(chromosome_number)){
+  if (!is.null(chromosome_number)){
     CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
   }
 
@@ -94,9 +94,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   count_CNV <- nrow(CNV_call)
 
   # connect to dataset GRCh37 or GRCh38
-  if(reference_genome == "GRCh37"){
+  if (reference_genome == "GRCh37"){
     ensembl <- biomaRt::useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl", GRCh = 37)
-  } else{
+  } else {
     ensembl <- biomaRt::useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl")
   }
 
@@ -113,7 +113,7 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   rm(ensembl)
 
   # filter by chromosome number if specified
-  if(!is.null(chromosome_number)){
+  if (!is.null(chromosome_number)){
     all_genes <- all_genes[all_genes$chromosome_name == chromosome_number, ]
   }
 
@@ -129,7 +129,7 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   # count number of CNVs that contain genes, for piechart graphic
   count_genic_CNV <- length(unique(genes_in_cnv$ID))
   # if specified, display the piechart
-  if(show_piechart == TRUE){
+  if (show_piechart == TRUE){
     plotCNVgeneImpact(count_genic_CNV, count_CNV)
   }
 

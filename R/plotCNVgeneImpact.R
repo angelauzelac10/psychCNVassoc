@@ -10,10 +10,10 @@
 plotCNVgeneImpact <- function(genic_CNV_count, total_CNV_count){
 
   # validate CNV counts
-  if(genic_CNV_count < 1){
+  if (genic_CNV_count < 1){
     stop("Could not produce piechart. There are no CNVs that contain genes.")
   }
-  if(genic_CNV_count > total_CNV_count){
+  if (genic_CNV_count > total_CNV_count){
     stop("Could not produce piechart. There cannot be more CNVs that contain genes than there are CNVs in total.")
   }
 
