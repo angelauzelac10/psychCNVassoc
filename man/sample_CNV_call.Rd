@@ -23,6 +23,9 @@ sample_CNV_call
 \description{
 A data frame containing a sample CNV call. Obtained from a sample CNV call
 dataset named ACMG_examples.hg19.bed from the ClassifyCNV package in the /Examples subdirectory.
+This dataset contains a subset of 21 CNV calls described by 4 fields: chromosome name, start position,
+end position, and type (deletion or duplication). The CNV calling was done on Homo sapiens genotype
+data using genome build hg19 and contain autosomes 1-5, 6, 11-3, 15, 17-19, 22, and sex chromosome X.
 }
 \examples{
 \dontrun{

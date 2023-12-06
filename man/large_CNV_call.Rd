@@ -23,6 +23,9 @@ large_CNV_call
 \description{
 A data frame containing a random subset of a sample CNV call. Obtained from a sample CNV call
 dataset named 1000Genomes.hg38.bed from the ClassifyCNV package in the /Examples subdirectory.
+This dataset contains a subset of 10,000 CNV calls described by 4 fields: chromosome name, start position,
+end position, and type (deletion or duplication). The CNV calling was done on Homo sapiens genotype
+data using genome build hg38 and contain autosomes 1-22 and sex chromosome X.
 }
 \examples{
 \dontrun{
