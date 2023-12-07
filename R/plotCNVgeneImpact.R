@@ -45,4 +45,5 @@ plotCNVgeneImpact <- function(genic_CNV_count, total_CNV_count){
   # return par to default state
   par(mai = current_mai)
 
+  return()
 }
