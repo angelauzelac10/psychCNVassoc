@@ -32,7 +32,7 @@ the input list of CNVs.
 }
 \description{
 A function that produces a list of genes that are contained within Copy Number
-Variants(CNVs) from the provided table of CNVs containing the chromosome number,
+Variants(CNVs) from the provided table of human CNVs containing the chromosome number,
 start position, end position, and type (duplication or deletion). User can also
 specify the chromosome number for which they want results, and the reference
 genome they want to use to find genes within the CNVs. Optionally, the function
@@ -42,25 +42,24 @@ outputs a graph showing the distribution of genic vs. non-genic CNVs.
 # Example 1
 # Using sample_CNV_call dataset available with package
 # Get list of genes
-gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
-
+gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 
 # Example 2
 # Produces piechart plot
-gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
+gene_list2 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
 
 # Example 3
 # Specifying chromosome number and reference genome
 # Get list of genes for chromosome 22 using the GRCh37 reference genome
-gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call,
+gene_list3 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call,
                           chromosome_number = "22",
                           reference_genome = "GRCh37")
 
-
 \dontrun{
+
 # Example 4
 # Larger dataset, runs slower
-large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
+large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = large_CNV_call)
 }
 
 }
