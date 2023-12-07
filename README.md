@@ -6,14 +6,14 @@
 ## Description
 
 <br> `psychCNVassoc` is an R package developed to streamline preliminary
-exploratory analysis in psychiatric genetics. It takes Copy Number
+exploratory analysis in psychiatric genetics. It takes human Copy Number
 Variant (CNV) data as input, identifies genes encompassed by these CNVs,
 and associates them with psychiatric disorders from the PsyGeNet
 database. While existing packages annotate CNVs with clinical
 pathogenicity, evaluate gene dosage sensitivity, and associate
 pathogenic CNVs with a broad range of quantitative phenotypes,
 psychCNVassoc stands out by focusing exclusively on the association of
-CNVs with psychiatric disorders. The package complements existing
+CNVs with human psychiatric disorders. The package complements existing
 workflows by determining whether CNVs warrant further investigation into
 the molecular mechanisms underlying their association with psychiatric
 disease comorbidities. This package accepts inputs in the format of CNV
@@ -37,7 +37,11 @@ devtools::install_github("angelauzelac10/psychCNVassoc", build_vignettes = TRUE)
 library("psychCNVassoc")
 ```
 
-To run the Shiny app: Under construction
+To run the Shiny app:
+
+``` r
+runPsychCNVassoc()
+```
 
 ## Overview
 
@@ -61,9 +65,11 @@ browseVignettes("psychCNVassoc")
 4.  ***plotDiseaseCloud*** for producing a wordcloud of diseases that
     are associated with the list of genes.
 
-The package also contains two example CNV call datasets named
-sample_CNV_call and large_CNV_call. Refer to package vignettes for more
-details. An overview of the package is illustrated below.
+The package includes two sample CNV call datasets, `sample_CNV_call` and
+`large_CNV_call`. Refer to package vignettes for more details. For
+additional CNV call data, users can utilize tools like PennCNV or
+QuantiSNP, or employ existing datasets, such as those from the RTCGA.CNV
+package. An overview of the package is illustrated below.
 
 ![](./inst/extdata/psychCNVassoc_example_figure.png)
 
@@ -71,26 +77,31 @@ details. An overview of the package is illustrated below.
 
 The author of the package is Angela Uzelac. The author wrote the
 *getCNVgenes* function which produces a list of genes encompassed within
-the CNVs from a provided table. The reference genomes used to annotate
-functional genomic regions within the CNVs are retrieved from Ensembl.
-Two functions were used from the `biomaRt` package, *useEnsembl* to
-connect to the specified genome dataset, and *getBM* to obtain all genes
-annotated with their chromosomal location. The `dplyr` package was also
-used in this function, *inner_join* was used to join the table of genes
-with the table of CNVs, and *filter* was used to select rows in the
-joined table where the gene coordinates are within the CNV coordinates.
-The author also wrote the function *getDiseaseAssoc* which makes use of
-the *psygenetGene* function from the `psygenet2r` package to obtain
-gene-disease associations from the provided list of genes. The function
-*plotDiseaseCloud* makes use of the `wordcloud2` and `tm` packages to
-clean text data, create a term-document matrix, and plot a wordcloud of
-the diseases associated with pathogenic CNVs. The function *plotCNVsize*
-plots the distribution of CNV sizes, with the code inspired by the
-`CNVRS-study` package. The function *plotCNVgeneImpact* (not available
-to users) was developed using the generative AI tool ChatGPT (OpenAI,
-2023) to aid with graphics setup.
+the human CNVs from a provided table. The human reference genomes used
+to annotate functional genomic regions within the CNVs are retrieved
+from Ensembl. Two functions were used from the `biomaRt` package,
+*useEnsembl* to connect to the specified genome dataset, and *getBM* to
+obtain all genes annotated with their chromosomal location. The `dplyr`
+package was also used in this function, *inner_join* was used to join
+the table of genes with the table of CNVs, and *filter* was used to
+select rows in the joined table where the gene coordinates are within
+the CNV coordinates. The author also wrote the function
+*getDiseaseAssoc* which makes use of the *psygenetGene* function from
+the `psygenet2r` package to obtain gene-disease associations from the
+provided list of genes. The function *plotDiseaseCloud* makes use of the
+`wordcloud2` and `tm` packages to clean text data, create a
+term-document matrix, and plot a wordcloud of the diseases associated
+with pathogenic CNVs. The function *plotCNVsize* plots the distribution
+of CNV sizes, with the code inspired by the `CNVRS-study` package. The
+function *plotCNVgeneImpact* (not available to users) was developed
+using the generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics
+setup.
 
 ## References
+
+- R Core Team (2023). *R: A Language and Environment for Statistical
+  Computing*. R Foundation for Statistical Computing, Vienna, Austria.
+  <https://www.R-project.org/>.
 
 - Wickham H (2016). *ggplot2: Elegant Graphics for Data Analysis*.
   Springer-Verlag New York. <https://ggplot2.tidyverse.org>
@@ -154,6 +165,10 @@ to users) was developed using the generative AI tool ChatGPT (OpenAI,
 
 - BioRender (2023). Image created by Uzelac, A. Retrieved November 13,
   2023, from <https://app.biorender.com/>
+
+- Kosinski M (2023). *RTCGA: The Cancer Genome Atlas Data Integration*.
+  <doi:10.18129/B9.bioc.RTCGA> <https://doi.org/10.18129/B9.bioc.RTCGA>,
+  R package version 1.31.0, <https://bioconductor.org/packages/RTCGA>.
 
 ## Acknowledgements
 
