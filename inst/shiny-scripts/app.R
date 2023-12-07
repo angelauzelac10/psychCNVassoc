@@ -16,30 +16,26 @@ ui <- fluidPage(
 
       tags$b("Description: TestingPackage is an R package to ..."),
 
-      # br() element to introduce extra vertical spacing ----
+      # vertical spacing
       br(),
       br(),
 
-      # input
+      # instructions
       tags$p("Instructions: Below, enter or select values required to perform the analysis. Default
              values are shown. Then press 'Run'. Navigate through
              the different tabs to the right to explore the results.
              PLEASE NOTE: running might take long. See raw output in the bottom tabs and visualizations in the top tabs."),
 
-      # br() element to introduce extra vertical spacing ----
+      # vertical spacing
       br(),
 
 
       # input
       shinyalert::useShinyalert(force = TRUE),  # Set up shinyalert
-      uiOutput("tab2"),
-      actionButton(inputId = "sample_data1",
-                   label = "Dataset 1 Details"),
-      uiOutput("tab1"),
-      actionButton(inputId = "sample_data2",
-                   label = "Dataset 2 Details"),
-      fileInput(inputId = "file1",
-                label = "Select a CNV call dataset to visualize. File should be in .csv format with rows corresponding to CNVs and columns to chromosome number, start position, end position, and type.",
+
+      fileInput(inputId = "input_file",
+                label = " TELL USER THEY CAN FIND IT ON GITHUB INST/EXTDATA
+                Select a CNV call dataset to visualize. File should be in .csv format with rows corresponding to CNVs and columns to chromosome number, start position, end position, and type.",
                 accept = c(".csv")),
       actionButton(inputId = "view_summary_button",
                    label = "View Summary"),
@@ -60,7 +56,7 @@ ui <- fluidPage(
                 label = "Optionally enter the number of top terms to remove from the wordcloud.
                 This should be a positive integer:"),
 
-      # br() element to introduce extra vertical spacing ----
+      # vertical spacing
       br(),
 
       # actionButton
@@ -68,6 +64,8 @@ ui <- fluidPage(
                    label = "Run"),
 
     ),
+
+
 
     # Main panel for displaying outputs ----
     mainPanel(
@@ -119,47 +117,64 @@ server <- function(input, output) {
 
   # Save input csv as a reactive
   matrixInput <- eventReactive(eventExpr = input$run_button, {
-    if (! is.null(input$file1))
-      as.data.frame(read.csv(input$file1$datapath,
+    if (! is.null(input$input_file))
+      as.data.frame(read.csv(input$input_file$datapath,
                              sep = ",",
                              header = TRUE,
                              row.names = 1))
   })
 
-  # Calculate information criteria value
-  startcalculation <- eventReactive(eventExpr = input$run_button, {
 
-    TestingPackage::InfCriteriaCalculation(
-      loglikelihood = as.numeric(input$logL),
-      nClusters = as.numeric(input$nClusters),
-      dimensionality = as.numeric(input$dimensionality),
-      observations = as.numeric(input$observations),
-      probability = as.numeric(unlist(strsplit(input$probability, ","))))
+  # return CNV table and input chromosome number
+  startSummaryPlot <- eventReactive(eventExpr = input$view_summary_button, {
+    if(! is.null(matrixInput())){
+      return(list(CNV_call = matrixInput(), chromosome_number = input$chromosome_number))
+    }
+  })
 
+  # prepare data: gene list, total CNV count, and genic CNV count
+  startAnalysis <- eventReactive(eventExpr = input$run_button, {
+
+    psychCNVassoc::getCNVgenes(
+      CNV_call = matrixInput(),
+      chromosome_number = as.character(input$chromosome_number),
+      reference_genome = as.character(input$referennce_genome)
+    )
+
+  })
+
+  # prepare data: gene-disease association table
+  startDiseaseAssoc <- reactive({
+    if (! is.null(startAnalysis())) {
+      diseaseAssocResult <- psychCNVassoc::getDiseaseAssoc(gene_list = startAnalysis()$gene_list)
+      return(getDiseaseAssocResult)
+    }
   })
 
 
 
   # Plotting CNV size distribution
   output$plotCNVsize <- renderPlot({
-    if (! is.null(startcalculation))
-      psychCNVassoc::plotCNVsize(CNV_call =  temp, chromosome_number = temp)
-  })
-
-
-  # Plotting RNAseq dataset
-  output$plotCNVGeneImpact <- renderPlot({
-    if (! is.null(startcalculation)) {
-      psychCNVassoc::plotCNVsize(genic_CNV_count =  temp, total_CNV_count = temp)
+    if (! is.null(startSummaryPlot)){
+      psychCNVassoc::plotCNVsize(CNV_call =  startSummaryPlot()$CNV_call,
+                                 chromosome_number = startSummaryPlot()$chromosome_number)
     }
   })
 
-  output$gene_list <- renderUI({
-    if (! is.null(startcalculation)) {
-      # Example list items
-      listItems <- psychCNVassoc::getCNVgenes(CNV_call = temp, chromosome_number = temp, reference_genome = temp, show_piechart = FALSE)
 
-      # Create an unordered list
+  # Plotting CNV gene impact (genic vs. non-genic)
+  output$plotCNVGeneImpact <- renderPlot({
+    if (! is.null(startAnalysis)) {
+      psychCNVassoc::plotCNVsize(genic_CNV_count = startAnalysis()$count_genic_CNV,
+                                 total_CNV_count = startAnalysis()$count_CNV)
+    }
+  })
+
+  # Output raw list of genes
+  output$gene_list <- renderUI({
+    if (! is.null(startAnalysis)) {
+      listItems <- startAnalysis()$gene_list
+
       ul(
         lapply(listItems, function(item) {
           li(item)
@@ -168,39 +183,25 @@ server <- function(input, output) {
     }
   })
 
+  # output raw gene-disease association table
   output$diseaseAssocTbl <- renderTable({
-    psychCNVassoc::getDiseaseAssoc(gene_list = temp)
+    if (! is.null(startDiseaseAssoc())) {
+      startDiseaseAssoc()
+    }
   })
 
-
-  # URLs for downloading data
-  url1 <- a("Example Dataset 2", href="https://raw.githubusercontent.com/anjalisilva/TestingPackage/master/inst/extdata/GeneCountsData2.csv")
-  output$tab1 <- renderUI({
-    tagList("Download:", url1)
+  # Plot wordcloud of diseases
+  output$diseaseWordcloud <- renderPlot({
+    if (! is.null(startDiseaseAssoc())) {
+      psychCNVassoc::plotDiseaseCloud(disease_assoc_tbl = startDiseaseAssoc())
+    }
   })
 
-  observeEvent(input$data2, {
-    # Show a modal when the button is pressed
-    shinyalert(title = "Example Dataset 2",
-               text = "An RNAseq experiment conductd using bean plants from 2016 in Canada. This dataset has n = 30 genes along rows and d = 3 conditions or samples along columns. Data was generated at the University of Guelph, Canada in 2016. To save the file (from Chrome), click on link, then right click, select 'Save As...' and then save as a .csv file.
-               Citation: Silva, A. (2020) TestingPackage: An Example R Package For BCB410H. Unpublished. URL https://github.com/anjalisilva/TestingPackage",
-               type = "info")
-  })
-
-  url2 <- a("Example Dataset 1", href="https://drive.google.com/file/d/1jMBTPpsBwaigjR3mO49AMYDxzjVnNiAv/view?usp=sharing")
-  output$tab2 <- renderUI({
-    tagList("Download:", url2)
-  })
-
-  observeEvent(input$data1, {
-    # Show a modal when the button is pressed
-    shinyalert(title = "Example Dataset 1",
-               text = "This is a simulated dataset generated from mixtures of multivariate Poisson log-normal
-               distributions with G = 2 components. It has a size of n = 1000 observations along rows and d = 6
-               samples along columns. Data was generated January, 2022. To save the file, click on link, then click 'Download' from the top right side.
-               Citation: Silva, A., S. J. Rothstein, P. D. McNicholas, and S. Subedi (2019). A multivariate Poisson-log normal
-               mixture model for clustering transcriptome sequencing data. BMC Bioinformatics. 2019;20(1):394. URL https://pubmed.ncbi.nlm.nih.gov/31311497/",
-               type = "info")
+  # Plot wordcloud of genes
+  output$geneWordcloud <- renderPlot({
+    if (! is.null(startDiseaseAssoc())) {
+      psychCNVassoc::plotGeneCloud(disease_assoc_tbl = startDiseaseAssoc())
+    }
   })
 
 
