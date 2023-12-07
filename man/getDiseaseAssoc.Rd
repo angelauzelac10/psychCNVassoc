@@ -18,24 +18,24 @@ A function that retrieves gene-disease associations from the PsyGeNet database,
 based on a provided list of genes (HGNC symbols) encompassed by Copy Number Variants (CNVs).
 }
 \examples{
-# Example 1
+#' # Example 1
 # Using example_CNV_call dataset available with package
 
 # Get list of genes
-gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc <- getDiseaseAssoc(gene_list)
+gene_disease_assoc <- psychCNVassoc::getDiseaseAssoc(gene_list)
 
 
 \dontrun{
 # Example 2
 # Larger dataset, runs slower
 # Get list of genes
-large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
+gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(large_gene_list)
 }
 
 }
