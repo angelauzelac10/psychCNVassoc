@@ -24,21 +24,20 @@ separated by the number of deletions (DEL) vs. number of duplications (DUP).
 Optionally, plots the size distribution for a specified chromosome.
 }
 \examples{
-
-\dontrun{
-
 # Example 1
 # Using example_CNV_call dataset available with package
 # Plot distribution of CNV sizes
-plotCNVsize(CNV_call = sample_CNV_call)
+psychCNVassoc::plotCNVsize(CNV_call = sample_CNV_call)
 
 # Example 2
 # Specifying chromosome number
-plotCNVsize(CNV_call = sample_CNV_call, chromosome_number = "22")
+psychCNVassoc::plotCNVsize(CNV_call = sample_CNV_call, chromosome_number = "22")
+
+\dontrun{
 
 # Example 3
 # Larger dataset, runs slower
-plotCNVsize(CNV_call = large_CNV_call)
+psychCNVassoc::plotCNVsize(CNV_call = large_CNV_call)
 }
 
 }
