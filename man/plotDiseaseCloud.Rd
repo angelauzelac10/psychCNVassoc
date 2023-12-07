@@ -28,34 +28,34 @@ visualize less frequent terms.
 }
 \examples{
 # Example 1
-# Using example_CNV_call dataset available with package
+# Using sample_CNV_call dataset available with package
 # Get list of genes
-gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc <- getDiseaseAssoc(gene_list)
+gene_disease_assoc <- psychCNVassoc::getDiseaseAssoc(gene_list)
 
 # Plot wordcloud of disease/disorder terms
-plotDiseaseCloud(gene_disease_assoc)
+psychCNVassoc::plotDiseaseCloud(gene_disease_assoc)
 
 # Removing top term to focus on less documented terms
-plotDiseaseCloud(gene_disease_assoc, 1)
+psychCNVassoc::plotDiseaseCloud(gene_disease_assoc, 1)
 
 
 \dontrun{
 # Example 2
 # Larger dataset, runs slower
 # Get list of genes
-large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 
 # Get gene-disease association
-gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
+gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(large_gene_list)
 
 # Plot wordcloud of disease/disorder names
-plotDiseaseCloud(gene_disease_assoc2)
+psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2)
 
 # Plot wordcloud without top 2 terms
-plotDiseaseCloud(gene_disease_assoc2, 2)
+psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2, 2)
 }
 
 }
