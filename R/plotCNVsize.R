@@ -17,17 +17,17 @@
 #' # Example 1
 #' # Using example_CNV_call dataset available with package
 #' # Plot distribution of CNV sizes
-#' plotCNVsize(CNV_call = sample_CNV_call)
+#' psychCNVassoc::plotCNVsize(CNV_call = sample_CNV_call)
 #'
 #' # Example 2
 #' # Specifying chromosome number
-#' plotCNVsize(CNV_call = sample_CNV_call, chromosome_number = "22")
-#'
+#' psychCNVassoc::plotCNVsize(CNV_call = sample_CNV_call, chromosome_number = "22")
 #'
 #' \dontrun{
+#'
 #' # Example 3
 #' # Larger dataset, runs slower
-#' plotCNVsize(CNV_call = large_CNV_call)
+#' psychCNVassoc::plotCNVsize(CNV_call = large_CNV_call)
 #'}
 #'
 #' @references
@@ -56,6 +56,9 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
 
   # filter by chromosome number and dynamically set histogram title
   hist_title <- "Distribution of CNV Sizes"
+  if(!is.null(chromosome_number) && !(chromosome_number %in% CNV_call$chromosome_name)){
+    stop("Specified chromosome number does not exist in the dataset.")
+  }
   if (!is.null(chromosome_number)){
     CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
     hist_title <- paste0(hist_title, " (Chromosome ", chromosome_number, ")", sep = "")
@@ -77,14 +80,14 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
                    position = "stack") +
     theme_bw() +
     ggtitle(hist_title) +
-    xlab("Size of CNV (log scale)") +
-    ylab("Number of CNVs") +
+    xlab("Size of CNV (log # base pairs)") +
+    ylab("Count of CNVs") +
     scale_fill_manual(name = NULL,
                       values = c('del' = "paleturquoise3",'dup' = "plum3"),
                       labels = c('Deletion','Duplication')) +
     theme(legend.position = 'right')
 
-  cnv_size_hist
+  return(cnv_size_hist)
 }
 
 # [END]
