@@ -1,7 +1,7 @@
 #' Get genes contained within CNVs
 #'
 #' A function that produces a list of genes that are contained within Copy Number
-#' Variants(CNVs) from the provided table of CNVs containing the chromosome number,
+#' Variants(CNVs) from the provided table of human CNVs containing the chromosome number,
 #' start position, end position, and type (duplication or deletion). User can also
 #' specify the chromosome number for which they want results, and the reference
 #' genome they want to use to find genes within the CNVs. Optionally, the function
@@ -25,25 +25,24 @@
 #' # Example 1
 #' # Using sample_CNV_call dataset available with package
 #' # Get list of genes
-#' gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
-#'
+#' gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 #'
 #' # Example 2
 #' # Produces piechart plot
-#' gene_list2 <- getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
+#' gene_list2 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
 #'
 #' # Example 3
 #' # Specifying chromosome number and reference genome
 #' # Get list of genes for chromosome 22 using the GRCh37 reference genome
-#' gene_list3 <- getCNVgenes(CNV_call = sample_CNV_call,
+#' gene_list3 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call,
 #'                           chromosome_number = "22",
 #'                           reference_genome = "GRCh37")
 #'
-#'
 #' \dontrun{
+#'
 #' # Example 4
 #' # Larger dataset, runs slower
-#' large_gene_list <- getCNVgenes(CNV_call = large_CNV_call)
+#' large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = large_CNV_call)
 #'}
 #'
 #' @references
@@ -86,33 +85,18 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   }
 
   # filter by specified chromosome
+  if(!is.null(chromosome_number) && !(chromosome_number %in% CNV_call$chromosome_name)){
+    stop("Specified chromosome number does not exist in the dataset.")
+  }
   if (!is.null(chromosome_number)){
     CNV_call <- CNV_call[CNV_call$chromosome_name == chromosome_number, ]
   }
 
   # assign unique ID to each CNV record
   CNV_call$ID <- 1:nrow(CNV_call)
-  # get count of CNVs, for piechart graphic
-  count_CNV <- nrow(CNV_call)
 
-  # connect to dataset GRCh37 or GRCh38
-  if (reference_genome == "GRCh37"){
-    ensembl <- biomaRt::useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl", GRCh = 37)
-  } else {
-    ensembl <- biomaRt::useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl")
-  }
 
-  # get all genes from biomaRt, including the chromosome they are on, and the
-  # start and end positions
-  all_genes <- biomaRt::getBM(attributes=c('hgnc_symbol',
-                                   'chromosome_name',
-                                   'start_position',
-                                   'end_position'), mart = ensembl)
-  # clean the data and remove alternate chromosome names
-  all_genes <- all_genes[all_genes$hgnc_symbol != "", ]
-  all_genes <- all_genes[all_genes$chromosome_name %in% c(1:22, "X", "Y"), ]
-  # free up space
-  rm(ensembl)
+  all_genes <- getEnsemblGenes(reference_genome = reference_genome)
 
   # filter by chromosome number if specified
   if (!is.null(chromosome_number)){
@@ -128,10 +112,13 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   # retrieve distinct genes contained within CNVs
   gene_list <- unique(genes_in_cnv$hgnc_symbol)
 
-  # count number of CNVs that contain genes, for piechart graphic
-  count_genic_CNV <- length(unique(genes_in_cnv$ID))
   # if specified, display the piechart
   if (show_piechart == TRUE){
+    # get count of CNVs, for piechart graphic
+    count_CNV <- nrow(CNV_call)
+    # count number of CNVs that contain genes, for piechart graphic
+    count_genic_CNV <- length(unique(genes_in_cnv$ID))
+    # plot
     plotCNVgeneImpact(count_genic_CNV, count_CNV)
   }
 
