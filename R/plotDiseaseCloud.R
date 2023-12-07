@@ -18,34 +18,34 @@
 #'
 #' @examples
 #' # Example 1
-#' # Using example_CNV_call dataset available with package
+#' # Using sample_CNV_call dataset available with package
 #' # Get list of genes
-#' gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+#' gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 #'
 #' # Get gene-disease association
-#' gene_disease_assoc <- getDiseaseAssoc(gene_list)
+#' gene_disease_assoc <- psychCNVassoc::getDiseaseAssoc(gene_list)
 #'
 #' # Plot wordcloud of disease/disorder terms
-#' plotDiseaseCloud(gene_disease_assoc)
+#' psychCNVassoc::plotDiseaseCloud(gene_disease_assoc)
 #'
 #' # Removing top term to focus on less documented terms
-#' plotDiseaseCloud(gene_disease_assoc, 1)
+#' psychCNVassoc::plotDiseaseCloud(gene_disease_assoc, 1)
 #'
 #'
 #' \dontrun{
 #' # Example 2
 #' # Larger dataset, runs slower
 #' # Get list of genes
-#' large_gene_list <- getCNVgenes(CNV_call = sample_CNV_call)
+#' large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
 #'
 #' # Get gene-disease association
-#' gene_disease_assoc2 <- getDiseaseAssoc(large_gene_list)
+#' gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(large_gene_list)
 #'
 #' # Plot wordcloud of disease/disorder names
-#' plotDiseaseCloud(gene_disease_assoc2)
+#' psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2)
 #'
 #' # Plot wordcloud without top 2 terms
-#' plotDiseaseCloud(gene_disease_assoc2, 2)
+#' psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2, 2)
 #'}
 #'
 #' @references
@@ -80,7 +80,10 @@ plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
     stop("The input data frame must contain a column 'DiseaseName'.")
   }
   if (!missing(remove_most_freq) && !is.numeric(remove_most_freq)){
-    stop("The second parameter (remove_most_freq) must be an number.")
+    stop("The second parameter (remove_most_freq) must be a positive integer.")
+  }
+  if (!missing(remove_most_freq) && (!is.integer(as.integer(remove_most_freq)) || remove_most_freq < 0)){
+    stop("The second parameter (remove_most_freq) must be a positive integer.")
   }
 
   # create a collection of text documents from the disease name column
@@ -120,7 +123,8 @@ plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
   }
 
   # plot wordcloud
-  wordcloud2::wordcloud2(word_freq_df[ , c("word", "log_freq")], size = 0.3)
+  wc <- wordcloud2::wordcloud2(word_freq_df[ , c("word", "log_freq")], size = 0.3)
+  return(wc)
 
 }
 
