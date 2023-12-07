@@ -24,7 +24,11 @@ validateCNVcall <- function(CNV_call){
     stop("All chromosome numbers in the CNV call must be 1-22, X, or Y.")
   }
   if (!all(is.numeric(CNV_call$start_position)) | !all(is.numeric(CNV_call$end_position))){
-    stop("Start and end position must be integer values.")
+    stop("Start and end position must be positive integer values.")
+  }
+  if (!all(is.integer(as.integer(CNV_call$start_position))) | !all(is.numeric(as.integer(CNV_call$end_position)))
+      | !all(CNV_call$start_position > 0) | !all(CNV_call$end_position > 0)){
+    stop("Start and end position must be positive integer values.")
   }
   if (!all(CNV_call$start_position < CNV_call$end_position)){
     stop("The start position must be before the end position for each CNV.")
