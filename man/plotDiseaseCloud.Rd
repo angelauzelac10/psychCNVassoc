@@ -30,7 +30,8 @@ visualize less frequent terms.
 # Example 1
 # Using sample_CNV_call dataset available with package
 # Get list of genes
-gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
+result <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
+gene_list <- result$gene_list
 
 # Get gene-disease association
 gene_disease_assoc <- psychCNVassoc::getDiseaseAssoc(gene_list)
@@ -46,7 +47,8 @@ psychCNVassoc::plotDiseaseCloud(gene_disease_assoc, 1)
 # Example 2
 # Larger dataset, runs slower
 # Get list of genes
-large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
+result2 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
+large_gene_list <- result2$gene_list
 
 # Get gene-disease association
 gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(large_gene_list)

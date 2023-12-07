@@ -42,24 +42,29 @@ outputs a graph showing the distribution of genic vs. non-genic CNVs.
 # Example 1
 # Using sample_CNV_call dataset available with package
 # Get list of genes
-gene_list <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
+result1 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call)
+gene_list1 <- result1$gene_list
 
 # Example 2
 # Produces piechart plot
-gene_list2 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
+result2 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call, show_piechart = TRUE)
+gene_list2 <- result2$gene_list
 
 # Example 3
 # Specifying chromosome number and reference genome
 # Get list of genes for chromosome 22 using the GRCh37 reference genome
-gene_list3 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call,
+result3 <- psychCNVassoc::getCNVgenes(CNV_call = sample_CNV_call,
                           chromosome_number = "22",
                           reference_genome = "GRCh37")
+gene_list3 <- result3$gene_list
 
 \dontrun{
 
 # Example 4
 # Larger dataset, runs slower
-large_gene_list <- psychCNVassoc::getCNVgenes(CNV_call = large_CNV_call)
+result4 <- psychCNVassoc::getCNVgenes(CNV_call = large_CNV_call)
+large_gene_list <- result4$gene_list
+
 }
 
 }
