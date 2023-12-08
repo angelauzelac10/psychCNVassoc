@@ -43,7 +43,8 @@ ui <- fluidPage(
       tags$p("Select parameters for annotating CNVs with genes:"),
 
       textInput(inputId = "chromosome_number",
-                label = "Optionally enter the chromosome name for which you would like to see results (1-22, X, Y):"),
+                label = "Optionally enter the chromosome name for which you would like to see results (1-22, X, Y):",
+                value = NULL),
       selectInput(inputId = "reference_genome",
                 label = "Enter the name of the reference genome to be used for annotating the CNVs with genes.
                 This should match the genome that was used for CNV calling:",
@@ -54,14 +55,16 @@ ui <- fluidPage(
 
       numericInput(inputId = "remove_most_freq",
                 label = "Optionally enter the number of top terms to remove from the wordcloud.
-                This should be a positive integer:"),
+                This should be a positive integer:",
+                0),
 
       # vertical spacing
       br(),
 
       # actionButton
-      actionButton(inputId = "run_button",
-                   label = "Run"),
+
+      actionButton(inputId = "other_button",
+                   label = "Run")
 
     ),
 
@@ -71,7 +74,7 @@ ui <- fluidPage(
     mainPanel(
 
       # Output: Tabset w/ plot, summary, and table ----
-      tabsetPanel(type = "top_tabs",
+      tabsetPanel(type = "tabs",
                   tabPanel("Plot of CNV size distribution",
                            h3("Instructions: Enter values and click 'View Summary' at the bottom left side."),
                            br(),
@@ -85,7 +88,7 @@ ui <- fluidPage(
                            h3("Wordcloud of genes frequently associated with the genes found in CNVs:"),
                            br(),
                            br(),
-                           plotOutput("diseaseWordcloud")),
+                           wordcloud2Output("diseaseWordcloud")),
                   tabPanel("Gene Wordcloud",
                            h3("Instructions: Enter values and click 'Run' at the bottom left side."),
                            h3("Wordcloud of genes found in CNVs that are frequently associated with psychiatric diseases:"),
@@ -94,17 +97,17 @@ ui <- fluidPage(
                            plotOutput("geneWordcloud"))
       ),
 
-      tabsetPanel(type = "bottom_tabs",
+      tabsetPanel(type = "tabs",
                   tabPanel("List of genes encompassed by CNVs",
                            h3("Instructions: Enter values and click 'Run' at the bottom left side."),
-                           h3("Genes encompassed by input CNVs:"),
+                           h3("Raw list of genes encompassed by input CNVs:"),
                            br(),
-                           uiOutput("gene_list")),
+                           DT::dataTableOutput("gene_list")),
                   tabPanel("Gene-Disease Association Table",
                            h3("Instructions: Enter values and click 'Run' at the bottom left side."),
-                           h3("Table of gene-disease associations:"),
+                           h3("Raw table of gene-disease associations:"),
                            br(),
-                           tableOutput("diseaseAssocTbl"))
+                           DT::dataTableOutput("diseaseAssocTbl"))
       )
 
     )
@@ -116,93 +119,130 @@ ui <- fluidPage(
 server <- function(input, output) {
 
   # Save input csv as a reactive
-  matrixInput <- eventReactive(eventExpr = input$run_button, {
-    if (! is.null(input$input_file))
-      as.data.frame(read.csv(input$input_file$datapath,
-                             sep = ",",
-                             header = TRUE,
-                             row.names = 1))
+  viewMatrixInput <- eventReactive(eventExpr = input$view_summary_button, {
+    if (! is.null(input$input_file)){
+      input_file_df <- as.data.frame(read.csv(input$input_file$datapath,
+                                              sep = ",",
+                                              header = TRUE,
+                                              row.names = NULL))
+      return(input_file_df)
+    }
   })
-
 
   # return CNV table and input chromosome number
   startSummaryPlot <- eventReactive(eventExpr = input$view_summary_button, {
-    if(! is.null(matrixInput())){
-      return(list(CNV_call = matrixInput(), chromosome_number = input$chromosome_number))
+    if (! is.null(viewMatrixInput())){
+      if (is.null(input$chromosome_number) || input$chromosome_number == ""){
+        chrom_num <- NULL
+      } else {
+        chrom_num <- input$chromosome_number
+      }
+      return(list(CNV_call = viewMatrixInput(), chromosome_number = chrom_num))
     }
   })
-
-  # prepare data: gene list, total CNV count, and genic CNV count
-  startAnalysis <- eventReactive(eventExpr = input$run_button, {
-
-    psychCNVassoc::getCNVgenes(
-      CNV_call = matrixInput(),
-      chromosome_number = as.character(input$chromosome_number),
-      reference_genome = as.character(input$referennce_genome)
-    )
-
-  })
-
-  # prepare data: gene-disease association table
-  startDiseaseAssoc <- reactive({
-    if (! is.null(startAnalysis())) {
-      diseaseAssocResult <- psychCNVassoc::getDiseaseAssoc(gene_list = startAnalysis()$gene_list)
-      return(getDiseaseAssocResult)
-    }
-  })
-
-
 
   # Plotting CNV size distribution
   output$plotCNVsize <- renderPlot({
-    if (! is.null(startSummaryPlot)){
+    if (! is.null(startSummaryPlot())){
       psychCNVassoc::plotCNVsize(CNV_call =  startSummaryPlot()$CNV_call,
                                  chromosome_number = startSummaryPlot()$chromosome_number)
     }
   })
 
 
-  # Plotting CNV gene impact (genic vs. non-genic)
-  output$plotCNVGeneImpact <- renderPlot({
-    if (! is.null(startAnalysis)) {
-      psychCNVassoc::plotCNVsize(genic_CNV_count = startAnalysis()$count_genic_CNV,
-                                 total_CNV_count = startAnalysis()$count_CNV)
+  # Save input csv as a reactive
+  analyzeMatrixInput <- eventReactive(eventExpr = input$other_button, {
+    if (! is.null(input$input_file)){
+      input_file_df2 <- as.data.frame(read.csv(input$input_file$datapath,
+                                              sep = ",",
+                                              header = TRUE,
+                                              row.names = NULL))
+      return(input_file_df2)
     }
   })
 
-  # Output raw list of genes
-  output$gene_list <- renderUI({
-    if (! is.null(startAnalysis)) {
-      listItems <- startAnalysis()$gene_list
+  # prepare data: gene list, total CNV count, and genic CNV count
+  startAnalysis <- eventReactive(eventExpr = input$other_button, {
+    if (! is.null(analyzeMatrixInput())){
+      if (is.null(input$chromosome_number) || input$chromosome_number == ""){
+        chrom_num <- NULL
+      } else {
+        chrom_num <- as.character(input$chromosome_number)
+      }
+      result <- psychCNVassoc::getCNVgenes(
+        CNV_call = analyzeMatrixInput(),
+        chromosome_number = chrom_num,
+        reference_genome = as.character(input$reference_genome)
+      )
+      return(result)
+    }
+  })
 
-      ul(
-        lapply(listItems, function(item) {
-          li(item)
-        })
+  # Plotting CNV gene impact (genic vs. non-genic)
+  output$plotCNVgeneImpact <- renderPlot({
+    if (! is.null(startAnalysis())){
+      if (is.null(input$chromosome_number) || input$chromosome_number == ""){
+        chrom_num <- NULL
+      } else {
+        chrom_num <- as.character(input$chromosome_number)
+      }
+      psychCNVassoc::getCNVgenes(
+        CNV_call = analyzeMatrixInput(),
+        chromosome_number = chrom_num,
+        reference_genome = as.character(input$reference_genome),
+        show_piechart = TRUE
       )
     }
   })
 
-  # output raw gene-disease association table
-  output$diseaseAssocTbl <- renderTable({
-    if (! is.null(startDiseaseAssoc())) {
-      startDiseaseAssoc()
+
+  # Output raw list of genes
+  output$gene_list <- DT::renderDT(DT::datatable({
+    if (! is.null(startAnalysis())) {
+      df <- data.frame("Genes" = startAnalysis()[[1]])
+      names(df) <- "Genes"
+      return(df)
+    }
+  }, options = list(pageLength = 50)))
+
+  # prepare data: gene-disease association table
+  startDiseaseAssoc <- reactive({
+    if (! is.null(startAnalysis())) {
+      diseaseAssocResult <- psychCNVassoc::getDiseaseAssoc(gene_list = startAnalysis()[[1]])
+      return(diseaseAssocResult)
     }
   })
+
+  # output raw gene-disease association table
+  output$diseaseAssocTbl <- DT::renderDT(DT::datatable({
+    if (! is.null(startDiseaseAssoc())) {
+      gda_df <- as.data.frame(startDiseaseAssoc())
+      return(gda_df)
+    }
+  }, options = list(pageLength = 50)))
 
   # Plot wordcloud of diseases
-  output$diseaseWordcloud <- renderPlot({
+  output$diseaseWordcloud <- renderWordcloud2({
+    print("in disease wc output")
     if (! is.null(startDiseaseAssoc())) {
-      psychCNVassoc::plotDiseaseCloud(disease_assoc_tbl = startDiseaseAssoc())
+      print("in disease wc if 1")
+      wc_output <- psychCNVassoc::plotDiseaseCloud(disease_assoc_tbl = as.data.frame(startDiseaseAssoc()))
+      d_word_freq <- wc_output$word_freq_df
+      if(nrow(d_word_freq) > 0){
+        print("in disease wc if 2")
+        wordcloud2::wordcloud2(d_word_freq[ , c("word", "log_freq")], size = 0.3)
+      }
     }
   })
 
+
   # Plot wordcloud of genes
-  output$geneWordcloud <- renderPlot({
-    if (! is.null(startDiseaseAssoc())) {
-      psychCNVassoc::plotGeneCloud(disease_assoc_tbl = startDiseaseAssoc())
-    }
-  })
+  # output$geneWordcloud <- renderPlot({
+  #   print("in gene wc output")
+  #   if (! is.null(startDiseaseAssoc())) {
+  #     psychCNVassoc::plotGeneCloud(disease_assoc_tbl = as.data.frame(startDiseaseAssoc()))
+  #   }
+  # })
 
 
 }
