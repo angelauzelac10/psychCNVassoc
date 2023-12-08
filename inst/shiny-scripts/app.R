@@ -76,35 +76,37 @@ ui <- fluidPage(
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
                   tabPanel("Plot of CNV size distribution",
-                           h3("Instructions: Enter values and click 'View Summary' at the bottom left side."),
+                           p("Instructions: Enter values and click 'View Summary' at the bottom left side."),
                            br(),
                            plotOutput("plotCNVsize")),
                   tabPanel("Piechart: Genic vs Non-Genic CNVs",
-                           h3("Instructions: Enter values and click 'Run' at the bottom left side."),
+                           p("Instructions: Enter values and click 'Run' at the bottom left side."),
                            br(),
                            plotOutput("plotCNVgeneImpact")),
                   tabPanel("Disease Wordcloud",
-                           h3("Instructions: Enter values and click 'Run' at the bottom left side."),
+                           p("Instructions: Enter values and click 'Run' at the bottom left side."),
                            h3("Wordcloud of genes frequently associated with the genes found in CNVs:"),
                            br(),
                            br(),
                            wordcloud2Output("diseaseWordcloud")),
                   tabPanel("Gene Wordcloud",
-                           h3("Instructions: Enter values and click 'Run' at the bottom left side."),
+                           p("Instructions: Enter values and click 'Run' at the bottom left side."),
                            h3("Wordcloud of genes found in CNVs that are frequently associated with psychiatric diseases:"),
                            br(),
                            br(),
-                           plotOutput("geneWordcloud"))
+                           wordcloud2Output("geneWordcloud"))
       ),
+      br(),
+      br(),
 
       tabsetPanel(type = "tabs",
                   tabPanel("List of genes encompassed by CNVs",
-                           h3("Instructions: Enter values and click 'Run' at the bottom left side."),
+                           p("Instructions: Enter values and click 'Run' at the bottom left side."),
                            h3("Raw list of genes encompassed by input CNVs:"),
                            br(),
                            DT::dataTableOutput("gene_list")),
                   tabPanel("Gene-Disease Association Table",
-                           h3("Instructions: Enter values and click 'Run' at the bottom left side."),
+                           p("Instructions: Enter values and click 'Run' at the bottom left side."),
                            h3("Raw table of gene-disease associations:"),
                            br(),
                            DT::dataTableOutput("diseaseAssocTbl"))
@@ -223,13 +225,11 @@ server <- function(input, output) {
 
   # Plot wordcloud of diseases
   output$diseaseWordcloud <- renderWordcloud2({
-    print("in disease wc output")
     if (! is.null(startDiseaseAssoc())) {
-      print("in disease wc if 1")
-      wc_output <- psychCNVassoc::plotDiseaseCloud(disease_assoc_tbl = as.data.frame(startDiseaseAssoc()))
+      wc_output <- psychCNVassoc::plotDiseaseCloud(disease_assoc_tbl = as.data.frame(startDiseaseAssoc()),
+                                                   remove_most_freq = input$remove_most_freq)
       d_word_freq <- wc_output$word_freq_df
       if(nrow(d_word_freq) > 0){
-        print("in disease wc if 2")
         wordcloud2::wordcloud2(d_word_freq[ , c("word", "log_freq")], size = 0.3)
       }
     }
@@ -237,12 +237,15 @@ server <- function(input, output) {
 
 
   # Plot wordcloud of genes
-  # output$geneWordcloud <- renderPlot({
-  #   print("in gene wc output")
-  #   if (! is.null(startDiseaseAssoc())) {
-  #     psychCNVassoc::plotGeneCloud(disease_assoc_tbl = as.data.frame(startDiseaseAssoc()))
-  #   }
-  # })
+  output$geneWordcloud <- renderWordcloud2({
+    if (! is.null(startDiseaseAssoc())) {
+      wc2_output <- psychCNVassoc::plotGeneCloud(disease_assoc_tbl = as.data.frame(startDiseaseAssoc()))
+      g_word_freq <- wc2_output$word_freq_df
+      if(nrow(g_word_freq) > 0){
+        wordcloud2::wordcloud2(g_word_freq[ , c("word", "log_freq")], size = 0.3)
+      }
+    }
+  })
 
 
 }
