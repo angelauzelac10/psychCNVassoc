@@ -96,7 +96,10 @@ plotGeneCloud <- function(disease_assoc_tbl){
 
   # plot wordcloud
   wc <- wordcloud2::wordcloud2(word_freq_df[ , c("word", "log_freq")], size = 0.3)
-  return(wc)
+
+  result <- list(wc, word_freq_df)
+  names(result) <- c("wordcloud", "word_freq_df")
+  return(result)
 
 }
 

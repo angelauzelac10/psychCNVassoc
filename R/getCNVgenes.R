@@ -76,10 +76,10 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   validateCNVcall(CNV_call)
 
   # validate chromosome number and reference genome
-  if (!missing(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
+  if (!missing(chromosome_number) && !is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
-  if (!missing(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
+  if (!missing(reference_genome) && !is.null(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
   }
   if (!is.logical(show_piechart)){
@@ -128,7 +128,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
     plotCNVgeneImpact(count_genic_CNV, count_CNV)
   }
 
-  return(list(gene_list, count_genic_CNV, count_CNV))
+  result <- list(gene_list, count_genic_CNV, count_CNV)
+  names(result) <- c("gene_list", "count_genic_CNV", "count_CNV")
+  return(result)
 
 }
 
