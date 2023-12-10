@@ -22,7 +22,7 @@ library(psychCNVassoc)
 
 ## Introduction
 
-`psychCNVassoc` is an R package developed to explore the impact of pathogenic CNVs on psychiatric disorders. It takes human Copy Number Variant (CNV) data as input, identifies genes encompassed by these CNVs, and associates them with psychiatric disorders from the PsyGeNet database. to see how the change in copy number of a gene affects crucial pathways involved in these conditions. how cnvs affect gene expression levels. The package complements existing workflows by determining whether CNVs warrant further investigation into the molecular mechanisms underlying their association with psychiatric disease comorbidities. This package accepts inputs in the format of CNV calls, which includes the chromosome number, start and end position, type of variation (deletion or duplication), which can be obtained using existing CNV detection tools like PennCNV. Additionally, it can accept a pre-defined list of genes as HGNC symbols (e.g. ‘COMT’, ‘DRD3’, 'HTR1A') for associating genes to diseases.  
+`psychCNVassoc` is an R package developed for exploring the impact of pathogenic CNVs on psychiatric disorders. It takes human Copy Number Variant (CNV) data as input, identifies genes encompassed by these CNVs, and associates them with psychiatric disorders from the PsyGeNet database. It is intended for preliminary investigation of how CNVs affect gene expression levels and to see whether the change in copy number of certain genes affect crucial pathways involved in psychiatric disease comorbidities. This package accepts inputs in the format of CNV calls, which includes the chromosome number, start and end position, and type of variation (deletion or duplication), which can be obtained using existing CNV detection tools like PennCNV. Additionally, it can accept a pre-defined list of genes as HGNC symbols (e.g. ‘COMT’, ‘DRD3’, 'HTR1A') for associating genes to diseases.  
 
 This package is developed for BCB410H: Applied Bioinformatics at the University of Toronto, Canada. This document gives a tour of psychCNVassoc. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production. See help(package = "psychCNVassoc") for further details.
 
@@ -65,9 +65,9 @@ runPsychCNVassoc()
 
 ### 1. Load the data and visualize
 
-The first step of using this package is obtaining human CNV data in the form of a CNV call. This should be a dataframe containing columns chromosome name, start position (base pair location), end position (base pair location), and type (indicating deletion or duplication). This can be done by obtaining existing data, for example from the package RTCGA.CNV, or by performing CNV calling on human genotype data using tools such as PennCNV or QuantiSNP. Using this dataset, users can determine which genes are found in the CNVs, and ultimately analyze the impact that the changes in gene expression levels might have on psychiatric conditions.
+The first step of using this package is obtaining human CNV data in the form of a CNV call. This should be a dataframe containing the columns: chromosome name (1-22, X, or Y), start position (base pair location), end position (base pair location), and type (indicating DEL for deletion or DUP for duplication). This can be done by obtaining existing data, for example from the package RTCGA.CNV, or by performing CNV calling on human genotype data using tools such as PennCNV or QuantiSNP. Using this dataset, users can determine which genes are found in the CNVs, and ultimately analyze the impact that the changes in gene expression levels might have on psychiatric conditions.
 
-In this package, a sample CNV call is provided. This dataset contains a subset of 21 CNV calls described by 4 fields: chromosome name, start and end position, and type. The CNV calling was done on Homo sapiens genotype data using genome build hg19 and contain autosomes 1-5, 6, 11-3, 15, 17-19, 22, and sex chromosome X. See `?sample_CNV_call` for more information and references. 
+In this package, a sample CNV call is provided. This dataset contains a subset of a CNV call with 21 CNVs described by 4 fields: chromosome name, start and end position, and type. The CNV calling was done on Homo sapiens genotype data using genome build hg19 and contain autosomes 1-5, 6, 11-3, 15, 17-19, 22, and sex chromosome X. See `?sample_CNV_call` for more information and references. 
 
 To load the CNV regions from sample_CNV_call.rda, provided in the /data folder:
 
@@ -101,7 +101,8 @@ The next step is to retrieve a list of genes that are affected by the provided C
 To obtain all the genes that are found in the provided CNVs and visualize the distribution of genic vs non-genic CNVs:
 
 ```{r error = FALSE, warning = FALSE}
-gene_list <- getCNVgenes(cnv_data, show_piechart = TRUE)
+result <- getCNVgenes(cnv_data, show_piechart = TRUE)
+gene_list <- result$gene_list
 head(gene_list)
 ```
 
@@ -120,21 +121,32 @@ head(gene_disease_assoc)
 This function returns a dataframe containing a variety of information regarding the gene-disease association, including the gene symbol, gene description, disease name, psychiatric disorder, and number of abstracts that identify this relationship. 
 
 
+### 4. Visualize results 
 
-The highlight of this package is the visualization of the most commonly observed disorders in the gene-disease association table. This representation is particularly beneficial for users as it reveals potential links between diseases and variations in copy number. Identifying these associations paves the way for deeper exploration into the molecular mechanisms underlying such conditions, ultimately contributing to a better understanding of their development and progression. This frequency of diseases is displayed as a wordcloud using the `plotDiseaseCloud` function. In the wordcloud, the larger a word is displayed, the more frequently it appears in the gene-disease association table. See `?plotDiseaseCloud` for more information, examples, and references.
+The highlight of this package is the visualization of the most commonly observed disorders and most common genes in the gene-disease association table. This representation is particularly beneficial for users as it reveals potential links between diseases and variations in copy number. Identifying these associations paves the way for deeper exploration into the molecular mechanisms underlying such conditions, ultimately contributing to a better understanding of their development and progression. The frequency of diseases is displayed as a wordcloud using the `plotDiseaseCloud` function, and the frequency of genes is displayed as a wordcloud using the `plotGeneCloud` function. In these wordclouds, the larger a word is displayed, the more frequently it appears in the gene-disease association table. See `?plotDiseaseCloud` and `?plotGeneCloud` for more information, examples, and references.
 
 
 To visualize which psychiatric disorders are associated with the list of genes, create a wordcloud using:
 
 ```{r error = FALSE, warning = FALSE}
-plotDiseaseCloud(gene_disease_assoc)
+dwc_result <- plotDiseaseCloud(gene_disease_assoc)
+dwc_result$wordcloud
 ```
 
 
-Since the PsyGeNet database contains gene annotations for some diseases more than others, the results may be bias. Therefore, users can choose to eliminate highly dominant terms to allow viewing of other important terms. For example, the database has a greater number of gene annotations for schizophrenia, and since this is the largest term in the first iteration of the wordcloud (above), users can eliminate it as follows:
+Since the PsyGeNet database contains gene annotations for some diseases more than others, the results may be biased. Therefore, users can choose to eliminate highly dominant terms to allow viewing of other important terms. For example, the database has a greater number of gene annotations for schizophrenia, and since this is the largest term in the first iteration of the wordcloud (above), users can eliminate it as follows:
 
 ```{r error = FALSE, warning = FALSE}
-plotDiseaseCloud(gene_disease_assoc, remove_most_freq = 1)
+dwc2_result <- plotDiseaseCloud(gene_disease_assoc, remove_most_freq = 1)
+dwc2_result$wordcloud
+```
+
+
+To visualize which genes are commonly associated with psychiatric disorders, create a wordcloud using:
+
+```{r error = FALSE, warning = FALSE}
+gwc_result <- plotGeneCloud(gene_disease_assoc)
+gwc_result$wordcloud
 ```
 
 
