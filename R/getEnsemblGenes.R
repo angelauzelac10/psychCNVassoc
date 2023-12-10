@@ -20,7 +20,7 @@ getEnsemblGenes <- function(reference_genome = "GRCh38"){
 
     },
     error=function(e) {
-      message('Error: Ensembl site unresponsive. Try again later.')
+      message('Error: Ensembl site unresponsive. Try again later. If you would like to check the status of Ensembl BioMart, please visit https://useast.ensembl.org/info/data/biomart/index.html.')
       stop(e)
     },
     warning=function(w) {
