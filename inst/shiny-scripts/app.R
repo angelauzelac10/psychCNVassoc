@@ -15,17 +15,14 @@ ui <- fluidPage(
     # Sidebar panel for inputs ----
     sidebarPanel(
 
-      tags$b("Description: TestingPackage is an R package to ..."),
-
       # vertical spacing
       br(),
       br(),
 
       # instructions
-      tags$p("Instructions: Below, enter or select values required to perform the analysis. Default
-             values are shown. Then press 'Run'. Navigate through
-             the different tabs to the right to explore the results.
-             PLEASE NOTE: running might take long. See raw output in the bottom tabs and visualizations in the top tabs."),
+      tags$p("Instructions: Below, upload a CNV dataset, and enter or select values required to perform the analysis.
+              Default values are shown. Then press 'Run'. Navigate through
+              the different tabs to the right to explore the results."),
 
       # vertical spacing
       br(),
@@ -35,8 +32,7 @@ ui <- fluidPage(
       shinyalert::useShinyalert(force = TRUE),  # Set up shinyalert
 
       fileInput(inputId = "input_file",
-                label = " TELL USER THEY CAN FIND IT ON GITHUB INST/EXTDATA
-                Select a CNV call dataset to visualize. File should be in .csv format with rows corresponding to CNVs and columns to chromosome number, start position, end position, and type.",
+                label = "Dataset:",
                 accept = c(".csv")),
       actionButton(inputId = "view_summary_button",
                    label = "View Summary"),
@@ -76,6 +72,51 @@ ui <- fluidPage(
 
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
+                  tabPanel("About",
+                           h2("Description"),
+                           p("This is a Shiny App that is part of the psychCNVassoc R package (Uzelac, 2023). psychCNVassoc is an R package developed to streamline preliminary exploratory analysis in
+                             psychiatric genetics. It takes human Copy Number Variant (CNV) data as input, identifies genes
+                             encompassed by these CNVs, and associates them with psychiatric disorders from the PsyGeNet database.
+                             It is intended for investigating how CNVs affect gene expression levels and to see
+                             whether the change in copy number of certain genes affect crucial pathways involved in psychiatric
+                             disease comorbidities."),
+                           br(),
+                           h2("Instructions"),
+                           h3("Input File"),
+                           p("Select a CNV call dataset to visualize. File should be in .csv format with rows corresponding to CNVs and columns to
+                              chromosome number, start position, end position, and type. Two example datasets are available for download on the package
+                             GitHub in the subdirectory inst/extdata. Follow the provided link to download the datasets: "),
+                           a("https://github.com/angelauzelac10/psychCNVassoc/tree/master/inst/extdata", href = "https://github.com/angelauzelac10/psychCNVassoc/tree/master/inst/extdata"),
+                           br(),
+                           br(),
+                           actionButton(inputId = "ds1_details",
+                                        label = "sample_CNV_call.csv Details"),
+                           actionButton(inputId = "ds2_details",
+                                        label = "large_CNV_call.csv Details"),
+                           br(),
+                           br(),
+                           h3("Summary plot"),
+                           p("Click on 'View Summary' then on the 'Plot of CNV size distribution' tab to vizualize the size distribution of the CNVs
+                           from the input data."),
+                           br(),
+                           h3("Run the Analysis"),
+                           p("Optionally, input values for the chromosome number for which to get the gene list, the reference genome to use for gene annotation,
+                             and the number of top terms to be remove from the resulting wordcloud of associated diseases. Then, click 'Run' in the bottom right corner
+                             of the sidebar to begin the analysis."),
+                           strong("Gene list results"),
+                           p("Click on the 'List of genes encompassed by CNVs' tab to view a raw list of genes that are encompassed by the CNVs from the input data,
+                             and click on the 'Piechart: Genic vs Non-Genic CNVs' tab to view the number of genic and non-genic CNVs in the dataset."),
+                           strong("Disease Association Results"),
+                           p("Click on the 'Gene-Disease Association Table' tab to view a raw table of gene-disease associations of genes that have a change in copy
+                             number, and click on the 'Disease Wordcloud' or 'Gene Wordcloud' tabs to view which diseases and genes are frequently observed in this table."),
+                           br(),
+                           h2("Important Note"),
+                           p("This package makes use of external packages and therefore will take longer than expected to run. When clicking on each tab,
+                             please expect to wait for results to load. The package also requires a stable internet connection as it utilizes the Ensembl
+                             website. Occasionally, the Ensembl site is unresponsive and users will not be able to obtain results at this time. In this case,
+                             please consider trying again later, or please visit the link below to verify the status of the site:"),
+                           a("Ensembl BioMart", href = "https://useast.ensembl.org/info/data/biomart/index.html")
+                           ),
                   tabPanel("Plot of CNV size distribution",
                            p("Instructions: Enter values and click 'View Summary' at the bottom left side."),
                            br(),
@@ -246,6 +287,32 @@ server <- function(input, output) {
         wordcloud2::wordcloud2(g_word_freq[ , c("word", "log_freq")], size = 0.3)
       }
     }
+  })
+
+  observeEvent(input$ds1_details, {
+    # Show a modal when the button is pressed
+    shinyalert(title = "Small Sample CNV Call Dataset",
+               text = "A data frame containing a sample CNV call. Obtained from a sample CNV call dataset
+               named ACMG_examples.hg19.bed from the ClassifyCNV package in the /Examples subdirectory. This
+               dataset contains a subset of 21 CNV calls described by 4 fields: chromosome name, start position,
+               end position, and type (deletion or duplication). The CNV calling was done on Homo sapiens genotype
+               data using genome build hg19 and contain autosomes 1-5, 6, 11-3, 15, 17-19, 22, and sex chromosome X.
+               Citation: Gurbich, T.A., Ilinsky, V.V. (2020). ClassifyCNV: a tool for clinicalannotation of
+               copy-number variants. Sci Rep 10, 20375. https://doi.org/10.1038/s41598-020-76425-3",
+               type = "info")
+  })
+
+  observeEvent(input$ds2_details, {
+    # Show a modal when the button is pressed
+    shinyalert(title = "Large Sample CNV Call Dataset",
+               text = "A data frame containing a random subset of a sample CNV call. Obtained from a sample CNV call
+               dataset named 1000Genomes.hg38.bed from the ClassifyCNV package in the /Examples subdirectory.
+               This dataset contains a subset of 10,000 CNV calls described by 4 fields: chromosome name, start position,
+               end position, and type (deletion or duplication). The CNV calling was done on Homo sapiens genotype
+               data using genome build hg38 and contain autosomes 1-22 and sex chromosome X. Citation: Citation: Gurbich, T.A.,
+               Ilinsky, V.V. (2020). ClassifyCNV: a tool for clinicalannotation of
+               copy-number variants. Sci Rep 10, 20375. https://doi.org/10.1038/s41598-020-76425-3",
+               type = "info")
   })
 
 
