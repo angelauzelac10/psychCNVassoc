@@ -201,7 +201,7 @@ server <- function(input, output) {
   # Output raw list of genes
   output$gene_list <- DT::renderDT(DT::datatable({
     if (! is.null(startAnalysis())) {
-      df <- data.frame("Genes" = startAnalysis()[[1]])
+      df <- data.frame("Genes" = startAnalysis()$gene_list)
       names(df) <- "Genes"
       return(df)
     }
@@ -210,7 +210,7 @@ server <- function(input, output) {
   # prepare data: gene-disease association table
   startDiseaseAssoc <- reactive({
     if (! is.null(startAnalysis())) {
-      diseaseAssocResult <- psychCNVassoc::getDiseaseAssoc(gene_list = startAnalysis()[[1]])
+      diseaseAssocResult <- psychCNVassoc::getDiseaseAssoc(gene_list = startAnalysis()$gene_list)
       return(diseaseAssocResult)
     }
   })
