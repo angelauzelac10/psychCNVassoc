@@ -37,6 +37,8 @@ ui <- fluidPage(
       actionButton(inputId = "view_summary_button",
                    label = "View Summary"),
 
+      br(),
+      br(),
       tags$p("Select parameters for annotating CNVs with genes:"),
 
       textInput(inputId = "chromosome_number",
@@ -53,7 +55,7 @@ ui <- fluidPage(
       numericInput(inputId = "remove_most_freq",
                 label = "Optionally enter the number of top terms to remove from the wordcloud.
                 This should be a positive integer:",
-                0),
+                0, min = 0),
 
       # vertical spacing
       br(),
@@ -97,7 +99,8 @@ ui <- fluidPage(
                            br(),
                            h3("Summary plot"),
                            p("Click on 'View Summary' then on the 'Plot of CNV size distribution' tab to vizualize the size distribution of the CNVs
-                           from the input data."),
+                           from the input data. If you would like to perform the analysis for a specific chromosome, you can also view the size distribution
+                             for a chosen chromosome number."),
                            br(),
                            h3("Run the Analysis"),
                            p("Optionally, input values for the chromosome number for which to get the gene list, the reference genome to use for gene annotation,
@@ -151,7 +154,7 @@ ui <- fluidPage(
                            p("Instructions: Enter values and click 'Run' at the bottom left side."),
                            h3("Raw table of gene-disease associations:"),
                            br(),
-                           DT::dataTableOutput("diseaseAssocTbl"))
+                           uiOutput("tableOrWarning"))
       )
 
     )
@@ -254,6 +257,14 @@ server <- function(input, output) {
     if (! is.null(startAnalysis())) {
       diseaseAssocResult <- psychCNVassoc::getDiseaseAssoc(gene_list = startAnalysis()$gene_list)
       return(diseaseAssocResult)
+    }
+  })
+
+  output$tableOrWarning <- renderUI({
+    if (nrow(startDiseaseAssoc()) > 0) {
+      DT::dataTableOutput("diseaseAssocTbl")
+    } else {
+      div(class = "alert alert-warning", "Warning: No gene-disease associations were found for the provided list of genes.")
     }
   })
 
