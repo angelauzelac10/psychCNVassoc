@@ -85,12 +85,16 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   if (!is.logical(show_piechart)){
     stop("Parameter show_piechart must be logical type (i.e. TRUE or FALSE).")
   }
-  if (missing(reference_genome)){
-    warning("Reference genome was not specified. GRCh38 was used.")
+
+
+  if (!is.null(chromosome_number) && chromosome_number == "x"){
+    chromosome_number <- "X"
+  } else if (!is.null(chromosome_number) && chromosome_number == "y"){
+    chromosome_number <- "Y"
   }
 
   # filter by specified chromosome
-  if(!is.null(chromosome_number) && !(chromosome_number %in% CNV_call$chromosome_name)){
+  if (!is.null(chromosome_number) && !(chromosome_number %in% CNV_call$chromosome_name)){
     stop("Specified chromosome number does not exist in the dataset.")
   }
   if (!is.null(chromosome_number)){
