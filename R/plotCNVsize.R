@@ -53,6 +53,11 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
   if (!is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y", "x", "y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
+  if (!is.null(chromosome_number) && chromosome_number == "x"){
+    chromosome_number <- "X"
+  } else if (!is.null(chromosome_number) && chromosome_number == "y"){
+    chromosome_number <- "Y"
+  }
 
   # filter by chromosome number and dynamically set histogram title
   hist_title <- "Distribution of CNV Sizes"
