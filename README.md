@@ -62,8 +62,11 @@ browseVignettes("psychCNVassoc")
 3.  ***plotCNVsize*** for plotting the distribution of CNV sizes,
     separated by deletion and duplication type CNVs, as a bar plot.
 
-4.  ***plotDiseaseCloud*** for producing a wordcloud of diseases that
-    are associated with the list of genes.
+4.  ***plotDiseaseCloud*** for producing a wordcloud of psychiatric
+    disorders that are associated with the list of genes.
+
+5.  ***plotGeneCloud*** for producing a wordcloud of genes that are
+    associated with the psychiatric disorders.
 
 The package includes two sample CNV call datasets, `sample_CNV_call` and
 `large_CNV_call`. Refer to package vignettes for more details. For
@@ -88,14 +91,15 @@ select rows in the joined table where the gene coordinates are within
 the CNV coordinates. The author also wrote the function
 *getDiseaseAssoc* which makes use of the *psygenetGene* function from
 the `psygenet2r` package to obtain gene-disease associations from the
-provided list of genes. The function *plotDiseaseCloud* makes use of the
-`wordcloud2` and `tm` packages to clean text data, create a
-term-document matrix, and plot a wordcloud of the diseases associated
-with pathogenic CNVs. The function *plotCNVsize* plots the distribution
-of CNV sizes, with the code inspired by the `CNVRS-study` package. The
-function *plotCNVgeneImpact* (not available to users) was developed
-using the generative AI tool ChatGPT (OpenAI, 2023) to aid with graphics
-setup.
+provided list of genes. The functions *plotDiseaseCloud* and
+*plotGeneCloud* make use of the `wordcloud2` and `tm` packages to clean
+text data, create a term-document matrix, and plot a wordcloud of the
+diseases and genes associated with pathogenic CNVs. The function
+*plotCNVsize* plots the distribution of CNV sizes, with the code
+inspired by the `CNVRS-study` package. The function *plotCNVgeneImpact*
+(not available to users) was developed with the help of the generative
+AI tool ChatGPT (OpenAI, 2023) to aid with graphics setup. The shiny app
+was developed by the author using the `shiny` package.
 
 ## References
 
@@ -169,6 +173,11 @@ setup.
 - Kosinski M (2023). *RTCGA: The Cancer Genome Atlas Data Integration*.
   <doi:10.18129/B9.bioc.RTCGA> <https://doi.org/10.18129/B9.bioc.RTCGA>,
   R package version 1.31.0, <https://bioconductor.org/packages/RTCGA>.
+
+- Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J,
+  McPherson J, Dipert A, Borges B (2023). *shiny: Web Application
+  Framework for R*. R package version 1.7.5.1,
+  <https://CRAN.R-project.org/package=shiny>.
 
 ## Acknowledgements
 

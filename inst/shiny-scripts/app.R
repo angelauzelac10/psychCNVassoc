@@ -1,6 +1,7 @@
 
 library(shiny)
 library(shinyalert)
+library(DT)
 
 # Define UI
 ui <- fluidPage(
