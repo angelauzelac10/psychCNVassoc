@@ -50,7 +50,7 @@ plotCNVsize <- function(CNV_call, chromosome_number = NULL){
   validateCNVcall(CNV_call)
 
   # validate chromosome number
-  if (!is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y"))){
+  if (!is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y", "x", "y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
 
