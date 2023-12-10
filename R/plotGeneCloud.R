@@ -94,6 +94,10 @@ plotGeneCloud <- function(disease_assoc_tbl){
   word_freq_df <- data.frame(word = names(word_freq), freq = word_freq)
   word_freq_df$log_freq <- log(word_freq_df$freq)
 
+  if (max(word_freq_df$freq) < 2) {
+    stop("The frequency of terms is too small. Cannot produce wordcloud.")
+  }
+
   # plot wordcloud
   wc <- wordcloud2::wordcloud2(word_freq_df[ , c("word", "log_freq")], size = 0.3)
 

@@ -119,6 +119,8 @@ plotDiseaseCloud <- function(disease_assoc_tbl, remove_most_freq = 0){
   # remove the specified number of top results to view less frequent terms more easily
   if (remove_most_freq >= nrow(word_freq_df)){
       stop("All word frequencies were removed. Cannot produce wordcloud.")
+  } else if (max(word_freq_df$freq) < 2) {
+    stop("The frequency of terms is too small. Cannot produce wordcloud.")
   } else if (remove_most_freq > 0){
       word_freq_df <- word_freq_df[order(-word_freq_df$freq), ]
       word_freq_df <- word_freq_df[(remove_most_freq + 1):nrow(word_freq_df), ]
