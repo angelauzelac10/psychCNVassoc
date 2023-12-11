@@ -37,10 +37,12 @@ gene_list <- result$gene_list
 gene_disease_assoc <- psychCNVassoc::getDiseaseAssoc(gene_list)
 
 # Plot wordcloud of disease/disorder terms
-psychCNVassoc::plotDiseaseCloud(gene_disease_assoc)
+wc <- psychCNVassoc::plotDiseaseCloud(gene_disease_assoc)
+wc$wordcloud
 
 # Removing top term to focus on less documented terms
-psychCNVassoc::plotDiseaseCloud(gene_disease_assoc, 1)
+wc2 <- psychCNVassoc::plotDiseaseCloud(gene_disease_assoc, 1)
+wc2$wordcloud
 
 
 \dontrun{
@@ -54,10 +56,13 @@ large_gene_list <- result2$gene_list
 gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(large_gene_list)
 
 # Plot wordcloud of disease/disorder names
-psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2)
+large_wc <- psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2)
+large_wc$wordcloud
 
 # Plot wordcloud without top 2 terms
-psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2, 2)
+large_wc2 <- psychCNVassoc::plotDiseaseCloud(gene_disease_assoc2, 2)
+large_wc2$wordcloud
+
 }
 
 }

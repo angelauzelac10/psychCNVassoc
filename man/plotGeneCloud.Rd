@@ -31,7 +31,8 @@ gene_list <- result$gene_list
 gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(gene_list)
 
 # Plot wordcloud of dominant genes
-psychCNVassoc::plotGeneCloud(gene_disease_assoc2)
+gene_wc <- psychCNVassoc::plotGeneCloud(gene_disease_assoc2)
+gene_wc$wordcloud
 
 
 \dontrun{
@@ -46,7 +47,8 @@ large_gene_list <- result2$gene_list
 gene_disease_assoc2 <- psychCNVassoc::getDiseaseAssoc(large_gene_list)
 
 # Plot wordcloud of disease/disorder names
-psychCNVassoc::plotGeneCloud(gene_disease_assoc2)
+large_gene_wc <- psychCNVassoc::plotGeneCloud(gene_disease_assoc2)
+large_gene_wc$wordcloud
 
 }
 

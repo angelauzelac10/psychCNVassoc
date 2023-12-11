@@ -15,7 +15,6 @@ The code for the Shiny app is in \code{./inst/shiny-scripts}.
 }
 \examples{
 \dontrun{
-
 psychCNVassoc::runPsychCNVassoc()
 }
 
@@ -23,4 +22,7 @@ psychCNVassoc::runPsychCNVassoc()
 \references{
 Silva, A. (2022) TestingPackage: An Example R Package For BCB410H.  Unpublished. URL
 https://github.com/anjalisilva/TestingPackage.
+
+Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, McPherson J, Dipert A, Borges B (2023).
+\emph{shiny: Web Application Framework for R}. R package version 1.7.5.1, \href{https://CRAN.R-project.org/package=shiny}.
 }
