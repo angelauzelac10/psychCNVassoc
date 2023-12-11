@@ -81,13 +81,13 @@ Users can view a summary of this data by plotting the distribution of CNVs by si
 
 To plot the size distribution of CNVs from the sample dataset:
 
-```{r error = FALSE, warning = FALSE, message = FALSE, fig.width = 12}
+```{r error = FALSE, warning = FALSE, message = FALSE, fig.width = 8}
 plotCNVsize(cnv_data)
 ```
 
 To plot the size distribution of provided CNVs for a specific chromosome:
 
-```{r error = FALSE, warning = FALSE, message = FALSE, fig.width = 12}
+```{r error = FALSE, warning = FALSE, message = FALSE, fig.width = 8}
 plotCNVsize(cnv_data, chromosome_number = "17")
 ```
 
@@ -100,7 +100,7 @@ The next step is to retrieve a list of genes that are affected by the provided C
 
 To obtain all the genes that are found in the provided CNVs and visualize the distribution of genic vs non-genic CNVs:
 
-```{r error = FALSE, warning = FALSE, fig.width = 12}
+```{r error = FALSE, warning = FALSE, fig.width = 8}
 result <- getCNVgenes(cnv_data, show_piechart = TRUE)
 gene_list <- result$gene_list
 head(gene_list)
@@ -128,7 +128,7 @@ The highlight of this package is the visualization of the most commonly observed
 
 To visualize which psychiatric disorders are associated with the list of genes, create a wordcloud using:
 
-```{r error = FALSE, warning = FALSE, fig.width = 12}
+```{r error = FALSE, warning = FALSE, fig.width = 8}
 dwc_result <- plotDiseaseCloud(gene_disease_assoc)
 dwc_result$wordcloud
 ```
@@ -136,7 +136,7 @@ dwc_result$wordcloud
 
 Since the PsyGeNet database contains gene annotations for some diseases more than others, the results may be biased. Therefore, users can choose to eliminate highly dominant terms to allow viewing of other important terms. For example, the database has a greater number of gene annotations for schizophrenia, and since this is the largest term in the first iteration of the wordcloud (above), users can eliminate it as follows:
 
-```{r error = FALSE, warning = FALSE, fig.width = 12}
+```{r error = FALSE, warning = FALSE, fig.width = 8}
 dwc2_result <- plotDiseaseCloud(gene_disease_assoc, remove_most_freq = 1)
 dwc2_result$wordcloud
 ```
@@ -144,7 +144,7 @@ dwc2_result$wordcloud
 
 To visualize which genes are commonly associated with psychiatric disorders, create a wordcloud using:
 
-```{r error = FALSE, warning = FALSE, fig.width = 12}
+```{r error = FALSE, warning = FALSE, fig.width = 8}
 gwc_result <- plotGeneCloud(gene_disease_assoc)
 gwc_result$wordcloud
 ```
