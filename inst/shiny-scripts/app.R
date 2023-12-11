@@ -46,7 +46,7 @@ ui <- fluidPage(
                 value = NULL),
       selectInput(inputId = "reference_genome",
                 label = "Enter the name of the reference genome to be used for annotating the CNVs with genes.
-                This should match the genome that was used for CNV calling:",
+                It is best to select the genome that was used for CNV calling:",
                 choices = c("GRCh38", "GRCh37")),
 
       br(),
@@ -79,14 +79,16 @@ ui <- fluidPage(
                            p("This is a Shiny App that is part of the psychCNVassoc R package (Uzelac, 2023). psychCNVassoc is an R package developed to streamline preliminary exploratory analysis in
                              psychiatric genetics. It takes human Copy Number Variant (CNV) data as input, identifies genes
                              encompassed by these CNVs, and associates them with psychiatric disorders from the PsyGeNet database.
-                             It is intended for investigating how CNVs affect gene expression levels and to see
+                             It is intended for investigating how CNVs affect gene expression levels and to determine
                              whether the change in copy number of certain genes affect crucial pathways involved in psychiatric
                              disease comorbidities."),
                            br(),
                            h2("Instructions"),
                            h3("Input File"),
-                           p("Select a CNV call dataset to visualize. File should be in .csv format with rows corresponding to CNVs and columns to
-                              chromosome number, start position, end position, and type. Two example datasets are available for download on the package
+                           p("Select a CNV call dataset to visualize. File should be in .csv format with rows corresponding to CNVs and columns being
+                              chromosome number, start position, end position, and type. Chromosomes include 1-22, X and Y, start and end position must be positive integers
+                             indicating the location of the starting and ending base pair, and the type should be either 'DUP' or 'DEL' indicating a duplication or deletion, respectively."),
+                            p("Two example datasets are available for download on the package
                              GitHub in the subdirectory inst/extdata. Follow the provided link to download the datasets: "),
                            a("https://github.com/angelauzelac10/psychCNVassoc/tree/master/inst/extdata", href = "https://github.com/angelauzelac10/psychCNVassoc/tree/master/inst/extdata"),
                            br(),
@@ -104,18 +106,19 @@ ui <- fluidPage(
                            br(),
                            h3("Run the Analysis"),
                            p("Optionally, input values for the chromosome number for which to get the gene list, the reference genome to use for gene annotation,
-                             and the number of top terms to be remove from the resulting wordcloud of associated diseases. Then, click 'Run' in the bottom right corner
+                             and the number of top terms to be removed from the resulting wordcloud of associated diseases. Then, click 'Run' in the bottom-left corner
                              of the sidebar to begin the analysis."),
                            strong("Gene list results"),
                            p("Click on the 'List of genes encompassed by CNVs' tab to view a raw list of genes that are encompassed by the CNVs from the input data,
                              and click on the 'Piechart: Genic vs Non-Genic CNVs' tab to view the number of genic and non-genic CNVs in the dataset."),
                            strong("Disease Association Results"),
-                           p("Click on the 'Gene-Disease Association Table' tab to view a raw table of gene-disease associations of genes that have a change in copy
+                           p("Click on the 'Gene-Disease Association Table' tab to view a raw table of gene-disease associations for genes that have a change in copy
                              number, and click on the 'Disease Wordcloud' or 'Gene Wordcloud' tabs to view which diseases and genes are frequently observed in this table."),
                            br(),
                            h2("Important Note"),
                            p("This package makes use of external packages and therefore will take longer than expected to run. When clicking on each tab,
-                             please expect to wait for results to load. The package also requires a stable internet connection as it utilizes the Ensembl
+                             please expect to wait for results to load. This also means that when the app produces an error due to faulty input, the error
+                             message will not be removed until the new result is shown. The package also requires a stable internet connection as it utilizes the Ensembl
                              website. Occasionally, the Ensembl site is unresponsive and users will not be able to obtain results at this time. In this case,
                              please consider trying again later, or please visit the link below to verify the status of the site:"),
                            a("Ensembl BioMart", href = "https://useast.ensembl.org/info/data/biomart/index.html")
