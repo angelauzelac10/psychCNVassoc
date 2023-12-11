@@ -4,8 +4,9 @@ test_that("get genes contained in CNVs from sample CNV call", {
 
   CNV_call = sample_CNV_call
 
-  gene_list <- getCNVgenes(
+  result <- getCNVgenes(
     CNV_call = CNV_call)
+  gene_list <- result$gene_list
 
   expect_type(gene_list, "character")
   show_failure(expect_s3_class(gene_list, "character"))
@@ -19,10 +20,11 @@ test_that("get genes contained in CNVs on chromosome 22 from sample CNV call usi
   chromosome_number = "22"
   reference_genome = "GRCh37"
 
-  gene_list <- getCNVgenes(
+  result <- getCNVgenes(
     CNV_call = CNV_call,
     chromosome_number = chromosome_number,
     reference_genome = reference_genome)
+  gene_list <- result$gene_list
 
 
   expect_type(gene_list, "character")
@@ -39,35 +41,35 @@ test_that("getCNVgenes error upon invalid user input", {
   show_piechart = FALSE
 
   # CNV_call not a dataframe
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = c("abc", "def"),
     chromosome_number = chromosome_number,
     reference_genome = reference_genome,
     show_piechart = show_piechart))
 
   # CNV_call missing columns
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call[ , 1:3],
     chromosome_number = chromosome_number,
     reference_genome = reference_genome,
     show_piechart = show_piechart))
 
   # chromosome number not valid
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call,
     chromosome_number = "25",
     reference_genome = reference_genome,
     show_piechart = show_piechart))
 
   # reference genome not either GRCh37 or GRCh38
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call,
     chromosome_number = chromosome_number,
     reference_genome = "AAA",
     show_piechart = show_piechart))
 
   # show piechart is not a logical type
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call,
     chromosome_number = chromosome_number,
     reference_genome = reference_genome,
@@ -93,21 +95,21 @@ test_that("getCNVgenes error upon invalid CNV call", {
   CNV_call3$type[1] <- "A"
 
   # invalid column name
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call1,
     chromosome_number = chromosome_number,
     reference_genome = reference_genome,
     show_piechart = show_piechart))
 
   # invalid value in end_position column
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call2,
     chromosome_number = chromosome_number,
     reference_genome = reference_genome,
     show_piechart = show_piechart))
 
   # invalid value in type column
-  expect_error(gene_list <- getCNVgenes(
+  expect_error(result <- getCNVgenes(
     CNV_call = CNV_call3,
     chromosome_number = chromosome_number,
     reference_genome = reference_genome,

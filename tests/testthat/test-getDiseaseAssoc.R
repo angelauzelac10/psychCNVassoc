@@ -4,7 +4,8 @@ test_that("get diseases associated with provided genes", {
 
   CNV_call = sample_CNV_call
 
-  gene_list <- getCNVgenes(CNV_call = CNV_call)
+  result <- getCNVgenes(CNV_call = CNV_call)
+  gene_list <- result$gene_list
 
   gene_disease_assoc <- getDiseaseAssoc(gene_list)
 
