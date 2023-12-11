@@ -20,6 +20,18 @@ validateCNVcall <- function(CNV_call){
   if (!all(colnames(CNV_call) %in% c("chromosome_name", "start_position", "end_position", "type"))){
     stop("The CNV call dataframe must have columns named chromosome_name, start_position, end_position, and type in that order.")
   }
+  if (any(is.na(CNV_call$chromosome_name)) | any(is.null(CNV_call$chromosome_name))){
+    stop("None of the values in the chromosome name column can be NA or NULL.")
+  }
+  if (any(is.na(CNV_call$start_position)) | any(is.null(CNV_call$start_position))){
+    stop("None of the values in the start position column can be NA or NULL.")
+  }
+  if (any(is.na(CNV_call$end_position)) | any(is.null(CNV_call$end_position))){
+    stop("None of the values in the end position column can be NA or NULL.")
+  }
+  if (any(is.na(CNV_call$type)) | any(is.null(CNV_call$type))){
+    stop("None of the values in the type column can be NA or NULL.")
+  }
   if (!all(CNV_call$chromosome_name %in% c(1:22, "X", "Y"))){
     stop("All chromosome numbers in the CNV call must be 1-22, X, or Y.")
   }

@@ -79,6 +79,9 @@ getCNVgenes <- function(CNV_call, chromosome_number = NULL, reference_genome = "
   if (!missing(chromosome_number) && !is.null(chromosome_number) && !(chromosome_number %in% c(1:22, "X", "Y", "x", "y"))){
     stop("Specified chromosome number must be 1-22, X, or Y.")
   }
+  if (is.null(reference_genome)){
+    stop("Must provide a value for reference genome.")
+  }
   if (!missing(reference_genome) && !is.null(reference_genome) && !(reference_genome %in% c("GRCh37", "GRCh38"))){
     stop("Invalid reference genome. Please choose 'GRCh37' or 'GRCh38'.")
   }
